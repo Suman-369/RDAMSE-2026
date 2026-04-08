@@ -1,1 +1,8 @@
-/* /index.html 200!
+# Serve JS/CSS with correct MIME type
+*.js   application/javascript
+*.jsx  application/javascript
+*.css  text/css
+*.svg  image/svg+xml
+
+# SPA fallback - handle client-side routing
+/*    /index.html   200
