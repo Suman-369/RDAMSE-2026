@@ -1,17 +1,23 @@
-import React, { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
+import React, { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import About from "./About";
+import ConferenceInfo from "./ConferenceInfo";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Home = () => {
   const containerRef = useRef(null);
-  const subtitleRef = useRef(null);
+  const heroRef = useRef(null);
   const pillRef = useRef(null);
+  const subtitleRef = useRef(null);
+  const associationRef = useRef(null);
+  const ctaRef = useRef(null);
 
   useEffect(() => {
-    // GSAP Timeline for sequential, smooth reveals
     const tl = gsap.timeline();
-
     // Initial hidden states for non-text elements
-    gsap.set([pillRef.current, subtitleRef.current], {
+    gsap.set([pillRef.current, subtitleRef.current, associationRef.current, ctaRef.current], {
       y: 60,
       opacity: 0,
     });
@@ -45,74 +51,130 @@ const Home = () => {
       opacity: 1,
       duration: 0.8,
       ease: 'power3.out',
-    }, '-=0.6');
+    }, '-=0.6')
+    .to(associationRef.current, {
+      y: 0,
+      opacity: 1,
+      duration: 0.8,
+      ease: 'power3.out',
+    }, '-=0.4')
+    .to(ctaRef.current, {
+      y: 0,
+      opacity: 1,
+      duration: 0.8,
+      ease: 'back.out(1.7)',
+    }, '-=0.4');
 
+    // Background floating elements animation
+    gsap.to(".floating-blob", {
+      x: "random(-20, 20)",
+      y: "random(-20, 20)",
+      duration: "random(3, 5)",
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut",
+    });
+
+    return () => {
+      ScrollTrigger.getAll().forEach(t => t.kill());
+    };
   }, []);
 
-  // Helper arrays for split text
   const rdamseText = "RDAMSE".split("");
   const yearText = "2026".split("");
 
   return (
-    <section 
-      ref={containerRef}
-      className="min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 relative overflow-hidden bg-[#fafafa]"
-      style={{ perspective: '1000px' }}
-    >
-      {/* Background Decorative Blur */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-[#b8f29d] opacity-[0.15] blur-[80px] md:blur-[120px] rounded-full pointer-events-none" />
+    <div ref={containerRef} className="w-full bg-[#fafafa]">
+      {/* Hero Section */}
+      <section 
+        ref={heroRef}
+        className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-4 pt-24 pb-40"
+      >
+        {/* Decorative Background Elements */}
+        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[#b8f29d]/20 rounded-full blur-[120px] floating-blob pointer-events-none" />
+        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-[#059669]/10 rounded-full blur-[100px] floating-blob pointer-events-none" />
+        
+        <div className="z-10 text-center max-w-7xl mx-auto flex flex-col items-center">
+          {/* Badge */}
+          <div
+            ref={pillRef}
+            className="mb-8 inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/50 backdrop-blur-md border border-[#b8f29d]/30 shadow-sm"
+          >
+            <span className="w-2 h-2 rounded-full bg-[#059669] animate-pulse" />
+            <span className="text-sm font-bold tracking-widest text-[#059669] uppercase">
+              2nd Edition • May 07-08, 2026
+            </span>
+          </div>
 
-      <div className="z-10 text-center flex flex-col items-center pt-32 sm:pt-40 md:pt-16 lg:pt-0 w-full">
-        {/* Animated Brand Pill */}
-        <div 
-          ref={pillRef}
-          className="mb-8 px-5 py-2 bg-[#b8f29d] text-gray-900 rounded-full text-xs sm:text-sm font-bold tracking-widest uppercase shadow-sm border border-[#a1df84]"
-        >
-          Discover The Future
+          {/* Main Title */}
+          <div className="flex flex-col items-center mb-8 gap-2">
+            <h1 className="flex flex-wrap justify-center text-[14vw] sm:text-[7rem] md:text-[9rem] lg:text-[11rem] font-black tracking-tighter text-gray-900 leading-[0.85] perspective-1000">
+              {rdamseText.map((char, index) => (
+                <span key={`r-${index}`} className="rdamse-char inline-block origin-bottom transition-all">
+                  {char}
+                </span>
+              ))}
+              <span className="mx-4 md:mx-6 flex text-[#059669]">
+                {yearText.map((char, index) => (
+                  <span key={`y-${index}`} className="rdamse-char inline-block origin-bottom">
+                    {char}
+                  </span>
+                ))}
+              </span>
+            </h1>
+          </div>
+
+          {/* Subtitle with better typography */}
+          <div ref={subtitleRef} className="max-w-4xl mx-auto mb-12">
+            <p className="text-xl md:text-2xl font-semibold text-gray-800 leading-tight mb-4">
+              Second International Conference on Recent Developments and Applications in Materials Science and Engineering
+            </p>
+            <div className="mx-auto w-24 h-1.5 bg-gradient-to-r from-[#b8f29d] to-[#059669] rounded-full" />
+          </div>
+
+          {/* Organization Info in a professional grid */}
+          <div ref={associationRef} className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-5xl mb-12">
+            <div className="p-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-gray-100 shadow-xl shadow-gray-200/50 transition-all hover:border-[#b8f29d]/50">
+              <span className="text-xs font-black uppercase tracking-[0.2em] text-gray-400 mb-3 block">In Association With</span>
+              <p className="text-lg font-bold text-gray-800">Indian Photobiology Society</p>
+              <p className="text-sm text-gray-600">Jadavpur University, Kolkata</p>
+            </div>
+            <div className="p-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-gray-100 shadow-xl shadow-gray-200/50 transition-all hover:border-[#059669]/50">
+              <span className="text-xs font-black uppercase tracking-[0.2em] text-gray-400 mb-3 block">Organized By</span>
+              <p className="text-lg font-bold text-[#059669]">Department of Basic Science & Humanities</p>
+              <p className="text-sm text-gray-600">Dr. Sudhir Chandra Sur Institute of Technology and Sports Complex</p>
+            </div>
+          </div>
+
+          {/* Call to Action */}
+          <div ref={ctaRef} className="flex flex-wrap items-center justify-center gap-4">
+            <button className="group relative px-10 py-4 bg-gray-900 text-white rounded-full text-lg font-bold shadow-2xl hover:scale-105 active:scale-95 transition-all overflow-hidden cursor-pointer">
+              <span className="relative z-10 flex items-center gap-3">
+                Register Now
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 group-hover:translate-x-2 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </span>
+              <div className="absolute inset-0 bg-gradient-to-r from-[#b8f29d] to-[#059669] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            </button>
+          </div>
         </div>
 
-        {/* Rolling Header Text */}
-        <div className="flex flex-col md:flex-row items-center gap-0 md:gap-6 overflow-hidden pb-4 w-full justify-center">
-          <h1 className="flex text-[15vw] sm:text-[6rem] md:text-[8rem] lg:text-[11rem] font-black tracking-tighter text-gray-900 leading-none drop-shadow-sm">
-            {rdamseText.map((char, index) => (
-              <span key={`r-${index}`} className="rdamse-char inline-block">
-                {char}
-              </span>
-            ))}
-          </h1>
-          <h2 className="flex text-[16vw] sm:text-[6rem] md:text-[8rem] lg:text-[11rem] font-black tracking-tighter text-[#059669] leading-none drop-shadow-sm">
-            {yearText.map((char, index) => (
-              <span key={`y-${index}`} className="rdamse-char inline-block">
-                {char}
-              </span>
-            ))}
-          </h2>
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10">
+          <span className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400">Scroll</span>
+          <div className="w-1 h-12 bg-gray-100 rounded-full overflow-hidden">
+            <div className="w-full h-1/2 bg-[#059669] animate-bounce" />
+          </div>
         </div>
+      </section>
 
-        {/* Subtitle */}
-        <p 
-          ref={subtitleRef}
-          className="mt-6 text-lg sm:text-xl md:text-2xl text-gray-500 max-w-2xl font-medium px-4 leading-relaxed"
-        >
-          Experience a reimagined interface driven by smooth animations, premium aesthetics, and unparalleled speed.
-        </p>
-
-        {/* Call to action */}
-        <button className="mt-12 group relative px-8 py-4 bg-gray-900 text-white rounded-full text-lg font-bold shadow-xl overflow-hidden transition-transform hover:scale-[1.02] cursor-pointer">
-          <span className="relative z-10 flex items-center gap-2 ">
-            Get Started
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 group-hover:translate-x-1 transition-transform" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
-            </svg>
-          </span>
-          <div className="absolute inset-0 h-full w-full bg-[#b8f29d] translate-y-full group-hover:translate-y-0 transition-transform duration-300 z-0"></div>
-          <style>{`
-            .group:hover span { color: black; }
-            .group span { transition: color 0.3s; }
-          `}</style>
-        </button>
+      {/* Main Content Sections */}
+      <div className="relative z-20 space-y-32 pb-32">
+        <About />
+        <ConferenceInfo />
       </div>
-    </section>
+    </div>
   );
 };
 
