@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import {Link} from "react-router-dom"
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -244,7 +245,7 @@ const Callforpaper = () => {
       </section>
 
       <section className="relative z-10 py-12 px-6">
-        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <div className="content-section p-8 rounded-3xl bg-[#059669] text-white shadow-xl shadow-emerald-200/20">
             <h3 className="text-2xl font-bold mb-4">Submission Ethics</h3>
             <p className="opacity-90 leading-relaxed mb-6">
@@ -262,9 +263,37 @@ const Callforpaper = () => {
               Full Registration is required for each paper. Registration fee includes Proceedings, Conference Kit, Lunch, Banquet, and Tutorials.
             </p>
             <button className="px-6 py-3 bg-[#b8f29d] text-[#059669] font-black rounded-xl hover:bg-[#a6e686] transition-colors flex items-center gap-2 group cursor-pointer">
-              View Registration
+              <Link to="/submission">
+                View Registration
+              </Link>
               <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
             </button>
+          </div>
+
+          <div className="content-section p-8 rounded-3xl bg-white border border-gray-200 shadow-xl shadow-gray-200/30">
+            <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+              <span className="w-10 h-10 rounded-2xl bg-[#b8f29d] flex items-center justify-center text-[#059669] text-xl shadow-inner font-serif italic">!</span>
+              Important Dates
+            </h3>
+            <div className="space-y-4">
+              {[
+                { label: "Abstract Submission", date: "15 April 2026", sub: "Deadline" },
+                { label: "Acceptance", date: "20 April 2026", sub: "Notification" },
+                { label: "Early Bird", date: "27 April 2026", sub: "Within 7 days of acceptance" },
+                { label: "Conference", date: "7–8 May 2026", sub: "Dates", highlight: true },
+              ].map((item, idx) => (
+                <div key={idx} className={`p-4 rounded-2xl border transition-all duration-300 ${item.highlight ? 'bg-[#059669] border-[#059669] text-white shadow-lg shadow-emerald-200/20' : 'bg-[#fafafa] border-gray-100 hover:border-[#b8f29d]'}`}>
+                  <div className="flex justify-between items-center gap-4">
+                    <div>
+                      <p className={`text-[10px] font-black uppercase tracking-widest mb-0.5 ${item.highlight ? 'text-emerald-200' : 'text-[#059669]'}`}>{item.label}</p>
+                      <p className={`text-xs font-bold ${item.highlight ? 'text-white/70' : 'text-gray-400'}`}>{item.sub}</p>
+                    </div>
+                    <p className={`text-base font-black whitespace-nowrap ${item.highlight ? 'text-white' : 'text-gray-900'}`}>{item.date}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <p className="mt-6 text-[10px] font-bold text-gray-400 uppercase tracking-tighter text-center">RDAMSE 2026 – Important Dates</p>
           </div>
         </div>
       </section>
