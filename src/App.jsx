@@ -9,6 +9,7 @@ import Submission from "./pages/Submission";
 import Ragistration from "./pages/Ragistration";
 import Commite from "./pages/Commite";
 import Vanue from "./pages/Vanue";
+import Footer from "./pages/Footer";
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
         <Route path="/committee" element={<Commite />} />
         <Route path="/venue" element={<Vanue />} />
       </Routes>
+      <Footer />
     </div>
   );
 };

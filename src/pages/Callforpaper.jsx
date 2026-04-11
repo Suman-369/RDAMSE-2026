@@ -284,7 +284,7 @@ const Callforpaper = () => {
               <div className="absolute top-0 right-0 p-6 opacity-30 group-hover:opacity-100 transition-opacity">
                 <span className="text-xs font-black text-gray-400 uppercase tracking-widest bg-gray-50 px-3 py-1 rounded-full border border-gray-100">Track {track.id.toString().padStart(2, '0')}</span>
               </div>
-              
+
               <div className="mb-8">
                 <div className="w-16 h-16 rounded-[1.5rem] bg-[#fafafa] flex items-center justify-center mb-6 border border-gray-100 group-hover:scale-110 group-hover:rotate-6 transition-transform shadow-sm">
                   <span className="text-3xl">{track.icon}</span>
@@ -316,7 +316,7 @@ const Callforpaper = () => {
           <div className="absolute top-1/2 left-1/4 w-96 h-96 bg-[#b8f29d] rounded-full blur-[150px]" />
           <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#059669] rounded-full blur-[150px]" />
         </div>
-        
+
         <div className="max-w-4xl mx-auto px-6 text-center relative z-20">
           <h2 className="text-4xl md:text-6xl font-black mb-8 leading-tight">Join <span className="text-[#b8f29d]">RDAMSE 2026</span></h2>
           <p className="text-xl text-gray-400 mb-12 max-w-2xl mx-auto font-medium">

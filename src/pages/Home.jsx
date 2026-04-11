@@ -23,11 +23,11 @@ const Home = () => {
     });
 
     // Initial hidden state for the rolling text characters
-    gsap.set('.rdamse-char', { 
-      x: -60, 
-      opacity: 0, 
-      rotationY: 90, 
-      transformOrigin: 'left center' 
+    gsap.set('.rdamse-char', {
+      x: -60,
+      opacity: 0,
+      rotationY: 90,
+      transformOrigin: 'left center'
     });
 
     tl.to(pillRef.current, {
@@ -37,33 +37,33 @@ const Home = () => {
       ease: 'back.out(1.5)',
       delay: 0.3,
     })
-    // Text characters roll from left to right stagger effect
-    .to('.rdamse-char', {
-      x: 0,
-      opacity: 1,
-      rotationY: 0,
-      duration: 1,
-      stagger: 0.1, // This makes it flow from left to right one by one
-      ease: 'back.out(2)',
-    }, '-=0.4')
-    .to(subtitleRef.current, {
-      y: 0,
-      opacity: 1,
-      duration: 0.8,
-      ease: 'power3.out',
-    }, '-=0.6')
-    .to(associationRef.current, {
-      y: 0,
-      opacity: 1,
-      duration: 0.8,
-      ease: 'power3.out',
-    }, '-=0.4')
-    .to(ctaRef.current, {
-      y: 0,
-      opacity: 1,
-      duration: 0.8,
-      ease: 'back.out(1.7)',
-    }, '-=0.4');
+      // Text characters roll from left to right stagger effect
+      .to('.rdamse-char', {
+        x: 0,
+        opacity: 1,
+        rotationY: 0,
+        duration: 1,
+        stagger: 0.1, // This makes it flow from left to right one by one
+        ease: 'back.out(2)',
+      }, '-=0.4')
+      .to(subtitleRef.current, {
+        y: 0,
+        opacity: 1,
+        duration: 0.8,
+        ease: 'power3.out',
+      }, '-=0.6')
+      .to(associationRef.current, {
+        y: 0,
+        opacity: 1,
+        duration: 0.8,
+        ease: 'power3.out',
+      }, '-=0.4')
+      .to(ctaRef.current, {
+        y: 0,
+        opacity: 1,
+        duration: 0.8,
+        ease: 'back.out(1.7)',
+      }, '-=0.4');
 
     // Background floating elements animation
     gsap.to(".floating-blob", {
@@ -86,14 +86,14 @@ const Home = () => {
   return (
     <div ref={containerRef} className="w-full bg-[#fafafa]">
       {/* Hero Section */}
-      <section 
+      <section
         ref={heroRef}
         className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-4 pt-24 pb-40"
       >
         {/* Decorative Background Elements */}
         <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[#b8f29d]/20 rounded-full blur-[120px] floating-blob pointer-events-none" />
         <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-[#059669]/10 rounded-full blur-[100px] floating-blob pointer-events-none" />
-        
+
         <div className="z-10 text-center max-w-7xl mx-auto flex flex-col items-center">
           {/* Badge */}
           <div

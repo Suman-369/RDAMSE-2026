@@ -1,79 +1,96 @@
-import React, { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
+import React from 'react';
 
 const speakers = [
-  { name: "Coming Soon", role: "Keynote Speaker", org: "International Institute" },
-  { name: "Coming Soon", role: "Featured Researcher", org: "Global Science University" },
-  { name: "Coming Soon", role: "Industry Expert", org: "Tech Innovations Lab" },
+  { name: "Prof. Joe OTSUKI", role: "Keynote Speaker", org: "Nihon University, Japan" },
+  { name: "Prof. Hiroshi Kitagawa", role: "Keynote Speaker", org: "Kyoto University, Japan" },
+  { name: "Prof. Don Seo", role: "Keynote Speaker", org: "Arizona State University, USA" },
+  { name: "Prof. Miki Hasegawa", role: "Keynote Speaker", org: "Aoyama Gakuin University, Japan" },
+  { name: "Prof. A. K. Ray", role: "Distinguished Speaker", org: "Director, JIBABR" },
+  { name: "Prof. A. K. Panda", role: "Distinguished Speaker", org: "VC, Rani Rashmoni Green University" },
+  { name: "Prof. R. Banerjee", role: "Distinguished Speaker", org: "IISER, India" },
+  { name: "Prof. K. K. Chattopadhyay", role: "Distinguished Speaker", org: "Jadavpur University, Kolkata" },
+  { name: "Prof. C. Sinha", role: "Distinguished Speaker", org: "Jadavpur University, Kolkata" },
+  { name: "Prof. N. R. Bandyopadhyay", role: "Distinguished Speaker", org: "IIEST Shibpur, India" },
+  { name: "Prof. B. Mahapatra", role: "Distinguished Speaker", org: "IISc Bangalore, India" },
+  { name: "Prof. D. Dhara", role: "Distinguished Speaker", org: "IIT Kharagpur, India" },
+  { name: "Prof. Debnarayan Jana", role: "Distinguished Speaker", org: "University of Calcutta" },
+  { name: "Dr. J. Mukhopadhyay", role: "Principal Scientist", org: "CSIR-CGCRI, Kolkata" },
+  { name: "Dr. Avik Ghosal", role: "Senior Manager", org: "Exide Industries Limited" },
 ];
 
-const Speacker = () => {
-  const containerRef = useRef(null);
-  const cardRefs = useRef([]);
-
-  useEffect(() => {
-    gsap.from(".speaker-title", {
-      y: 30,
-      opacity: 0,
-      duration: 1,
-      ease: "power3.out"
-    });
-
-    gsap.from(cardRefs.current, {
-      y: 40,
-      opacity: 0,
-      duration: 0.8,
-      stagger: 0.2,
-      ease: "back.out(1.7)",
-      delay: 0.3
-    });
-  }, []);
-
-  return (
-    <div ref={containerRef} className="min-h-screen pt-40 pb-20 px-6 bg-[#fafafa] flex flex-col items-center">
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#b8f29d]/10 rounded-full blur-[120px] pointer-events-none" />
-      
-      <div className="z-10 max-w-7xl w-full">
-        <div className="text-center mb-16">
-          <h1 className="speaker-title text-5xl md:text-7xl font-black text-gray-900 mb-6 tracking-tight">
-            Distinguished <span className="text-[#059669]">Speakers</span>
-          </h1>
-          <p className="text-xl text-gray-500 max-w-2xl mx-auto font-medium">
-            Join world-renowned experts and innovators as they share their groundbreaking research and insights at IC-RDAMSE 2026.
-          </p>
+const SpeakerCard = ({ speaker }) => (
+  <div className="group bg-white rounded-2xl p-6 border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col items-center text-center h-full">
+    <div className="relative mb-5">
+      <div className="w-24 h-24 rounded-full bg-slate-50 p-1 border border-slate-100 group-hover:border-emerald-500/30 transition-colors duration-300 overflow-hidden">
+        <img 
+          src={`https://ui-avatars.com/api/?name=${encodeURIComponent(speaker.name)}&background=f0fdf4&color=10b981&bold=true&size=128`}
+          alt={speaker.name}
+          className="w-full h-full rounded-full object-cover group-hover:scale-110 transition-transform duration-500"
+        />
+      </div>
+      <div className="absolute top-0 right-0">
+        <div className="w-5 h-5 bg-emerald-500 rounded-full border-2 border-white shadow-sm flex items-center justify-center">
+          <div className="w-1 h-1 bg-white rounded-full" />
         </div>
+      </div>
+    </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div className="flex-grow">
+      <h3 className="text-base font-bold text-slate-900 mb-1 group-hover:text-emerald-600 transition-colors duration-300">
+        {speaker.name}
+      </h3>
+      <p className="text-[10px] uppercase font-bold tracking-wider text-emerald-600 mb-3 inline-block px-2.5 py-0.5 bg-emerald-50 rounded-full">
+        {speaker.role}
+      </p>
+      <p className="text-xs text-slate-500 font-medium leading-relaxed">
+        {speaker.org}
+      </p>
+    </div>
+  </div>
+);
+
+const Speacker = () => {
+  return (
+    <div className="min-h-screen pt-28 pb-20 px-4 md:px-8 bg-[#fdfdfd]">
+      <div className="max-w-7xl mx-auto">
+        <header className="text-center mb-16 animate-fade-in-up">
+          <span className="inline-block py-1.5 px-4 bg-emerald-50 text-emerald-700 text-[10px] font-bold uppercase tracking-widest rounded-full mb-6">
+            Keynote & Invited Speakers
+          </span>
+          <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 mb-6 tracking-tight">
+            Eminent <span className="text-emerald-600">Speakers</span>
+          </h1>
+          <p className="max-w-2xl mx-auto text-slate-600 text-base md:text-lg leading-relaxed">
+            Leading experts from across the globe sharing innovative research and futuristic visions in Materials Science and Engineering.
+          </p>
+          <div className="mt-8 w-16 h-1 bg-emerald-500 mx-auto rounded-full" />
+        </header>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
           {speakers.map((s, idx) => (
-            <div
-              key={idx}
-              ref={el => (cardRefs.current[idx] = el)}
-              className="group relative p-1 rounded-[2.5rem] bg-gradient-to-br from-gray-100 to-white shadow-xl shadow-gray-200/50 hover:shadow-2xl hover:shadow-[#059669]/10 transition-all"
-            >
-              <div className="p-8 rounded-[2.4rem] bg-white h-full flex flex-col items-center text-center">
-                <div className="w-40 h-40 rounded-full bg-gray-50 border-4 border-[#b8f29d]/20 mb-6 overflow-hidden relative">
-                   <div className="absolute inset-0 bg-gradient-to-tr from-[#b8f29d]/20 to-[#059669]/10" />
-                   <svg className="w-full h-full text-gray-200 p-8" fill="currentColor" viewBox="0 0 24 24">
-                     <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                   </svg>
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">{s.name}</h3>
-                <p className="text-[#059669] font-black uppercase tracking-widest text-xs mb-4">{s.role}</p>
-                <div className="w-12 h-1 bg-gray-100 rounded-full mb-4" />
-                <p className="text-gray-500 font-medium">{s.org}</p>
-              </div>
+            <div key={idx} className="animate-fade-in-up" style={{ animationDelay: `${idx * 0.05}s`, opacity: 0, animationFillMode: 'forwards' }}>
+              <SpeakerCard speaker={s} />
             </div>
           ))}
         </div>
-        
-        <div className="mt-20 p-12 rounded-[3rem] bg-gray-900 text-center relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-[#b8f29d]/10 rounded-full blur-3xl" />
-          <h2 className="text-3xl font-black text-white mb-4 relative z-10">Want to be a Speaker?</h2>
-          <p className="text-gray-400 mb-8 max-w-xl mx-auto relative z-10">We are still accepting nominations for keynote and plenary sessions for the upcoming edition.</p>
-          <button className="relative z-10 px-8 py-4 bg-[#b8f29d] text-gray-900 rounded-full font-bold hover:scale-105 transition-transform cursor-pointer">
-            Inquire Now
-          </button>
-        </div>
+
+        <section className="mt-24 p-8 md:p-14 rounded-3xl bg-slate-900 text-center relative overflow-hidden animate-fade-in-up" style={{ animationDelay: '0.4s', opacity: 0, animationFillMode: 'forwards' }}>
+          <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl -mr-32 -mt-32" />
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl -ml-32 -mb-32" />
+          
+          <div className="relative z-10">
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">Interested in Speaking?</h2>
+            <p className="text-slate-400 text-base max-w-xl mx-auto mb-8">
+              Contribute your expertise to IC-RDAMSE 2026. Join a community of innovators and thought leaders.
+            </p>
+            <button 
+              disabled
+              className="px-8 py-3.5 bg-blue-500 text-white rounded-xl font-bold cursor-not-allowed border border-slate-700 transition-all opacity-80"
+            >
+              Nomination
+            </button>
+          </div>
+        </section>
       </div>
     </div>
   );
