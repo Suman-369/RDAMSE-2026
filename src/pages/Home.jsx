@@ -3,6 +3,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import About from "./About";
 import ConferenceInfo from "./ConferenceInfo";
+import { Link } from "react-router-dom";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -150,7 +151,7 @@ const Home = () => {
           <div ref={ctaRef} className="flex flex-wrap items-center justify-center gap-4">
             <button className="group relative px-10 py-4 bg-gray-900 text-white rounded-full text-lg font-bold shadow-2xl hover:scale-105 active:scale-95 transition-all overflow-hidden cursor-pointer">
               <span className="relative z-10 flex items-center gap-3">
-                Register Now
+                <Link to="/submission">Register Now</Link>
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 group-hover:translate-x-2 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
