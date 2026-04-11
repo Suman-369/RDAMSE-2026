@@ -60,10 +60,13 @@ const Committee = () => {
       { name: "Dr. Sukhendu Sadhukhan", role: "Asst. Prof., BSH, DSCSITSC" },
     ],
     members: [
-      { name: "Mr. Bapin Mondal", role: "Asst. Prof., BSH, DSCSITSC" },
-      { name: "Ms. Pallabi Bose", role: "Asst. Prof., BSH, DSCSITSC" },
+      { name: "Dr. Kausik Sardar", role: "Asst. Prof., BSH, DSCSITSC" },
+      { name: "Ms. Neha Saha", role: "Asst. Prof., BSH, DSCSITSC" },
+      { name: "Dr. Debasish Sadhukhan", role: "Asst. Prof., BSH, DSCSITSC" },
+      { name: "Dr. Amit Samadder", role: "Asst. Prof., BSH, DSCSITSC" },
       { name: "Ms. Debasmita Roy Chowdhury", role: "Asst. Prof., BSH, DSCSITSC" },
       { name: "Ms. Nibedita Biswas", role: "Asst. Prof., BSH, DSCSITSC" },
+      { name: "Dr. Shayari Basu", role: "Asst. Prof., BSH, DSCSITSC" },
     ]
   };
 
