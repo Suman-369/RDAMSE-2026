@@ -58,7 +58,7 @@ const UserIcon = ({ className }) => (
 const speakers = [
   { 
     name: "Prof. Joe OTSUKI", 
-    role: "Keynote Speaker", 
+    role: "Plenary Speaker", 
     org: "Nihon University, Japan",
     link: "https://www.chem.cst.nihon-u.ac.jp/~otsuki/otsuki-e-files/research.html",
     image: joe
@@ -79,105 +79,105 @@ const speakers = [
   },
   { 
     name: "Prof. A. K. Ray", 
-    role: "Invited Speaker (Padma Shri)", 
+    role: "Keynote Speaker (Padma Shri)", 
     org: "Director, JISASR",
     link: "https://jisiasr.org/prof-ajoy-kumar-ray/",
     image: ajoy
   },
   { 
     name: "Prof. A. K. Panda", 
-    role: "Invited Speaker", 
+    role: "Plenary Speaker", 
     org: "VC, Rani Rashmoni Green University",
     link: "https://www.rrgu.in/",
     image: ak
   },
   { 
     name: "Prof. R. Banerjee", 
-    role: "Invited Speaker", 
+    role: "Keynote Speaker", 
     org: "IISER, Kolkata",
     link: "https://www.iiserkol.ac.in/web/faculty-details/rahul-banerjee",
     image: rkb
   },
   { 
     name: "Prof. K. K. Chattopadhyay", 
-    role: "Invited Speaker", 
+    role: "Keynote Speaker", 
     org: "Jadavpur University, Kolkata",
     link: "https://jaduniv.irins.org/profile/56946",
     image: kk
   },
   { 
     name: "Prof. C. Sinha", 
-    role: "Invited Speaker", 
+    role: "Keynote Speaker", 
     org: "Jadavpur University, Kolkata",
     link: "https://www.researchgate.net/profile/Chittaranjan-Sinha-2",
     image: cc
   },
   { 
     name: "Prof. N. R. Bandyopadhyay", 
-    role: "Invited Speaker", 
+    role: "Keynote Speaker", 
     org: "IIEST, Kolkata",
     link: "https://mrsikol.org/index.php/committee/",
     image: nrb
   },
   { 
     name: "Prof. S. Mahapatra", 
-    role: "Invited Speaker", 
+    role: "Keynote Speaker", 
     org: "IISc, Bangalore",
     link: "https://faculty.dese.iisc.ac.in/santanu/",
     image: san
   },
   { 
     name: "Prof. D. Dhara", 
-    role: "Invited Speaker", 
+    role: "Keynote Speaker", 
     org: "IIT Kharagpur",
     link: "https://loop.frontiersin.org/people/138352/overview",
     image: dd
   },
   { 
     name: "Dr. S. Ghosh", 
-    role: "Invited Speaker", 
+    role: "Keynote Speaker", 
     org: "Principal Scientist, CSIR-CGCRI, Kolkata",
     link: "https://www.cgcri.res.in/research/research-divisions/sensor-actuator-division/dr-srabanti-ghosh/",
     image: null // Placeholder
   },
   { 
     name: "Prof. D. Jana", 
-    role: "Invited Speaker", 
+    role: "Keynote Speaker", 
     org: "University of Calcutta",
     link: "http://independent.academia.edu/DebasishJana",
     image: ddj
   },
   { 
     name: "Dr. J. Mukhopadhyay", 
-    role: "Invited Speaker", 
+    role: "Keynote Speaker", 
     org: "CSIR-CGCRI, Kolkata",
     link: "https://www.cgcri.res.in/research/research-divisions/energy-materials-devices/dr-jayanta-mukhopadhyay/",
     image: jm
   },
   { 
     name: "Prof. Debashis De", 
-    role: "Invited Speaker", 
+    role: "Keynote Speaker", 
     org: "MAKAUT, Kolkata",
     link: "https://scholar.google.co.in/citations?user=vPj7n0QAAAAJ&hl=en",
     image: null // Placeholder
   },
   { 
     name: "Prof. M. Mondal", 
-    role: "Invited Speaker", 
+    role: "Keynote Speaker", 
     org: "IACS, Kolkata",
     link: "https://iacs.res.in/athusers/index.php?navid=0&userid=IACS0039",
     image: mm
   },
   { 
     name: "Dr. M. Samanta", 
-    role: "Invited Speaker", 
+    role: "Keynote Speaker", 
     org: "Scientist, DRDO, Kolkata",
     link: "https://www.researchgate.net/profile/Moumita-Samanta",
     image: null // Placeholder
   },
   { 
     name: "Dr. A. Ghosal", 
-    role: "Invited Speaker", 
+    role: "Keynote Speaker", 
     org: "Senior Manager, Exide Industries",
     link: "https://www.linkedin.com/in/avik-ghosal-5a30a485/",
     image: sj
@@ -277,11 +277,11 @@ const Speacker = () => {
         {/* Section: Keynote Speakers */}
         <div className="mb-12">
           <div className="flex items-center gap-4 mb-10">
-            <h2 className="text-2xl font-bold text-slate-800 whitespace-nowrap">Keynote Speakers</h2>
+            <h2 className="text-2xl font-bold text-slate-800 whitespace-nowrap">Plenary Speakers</h2>
             <div className="h-[1px] w-full bg-slate-200" />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {speakers.filter(s => s.role.includes("Keynote")).map((s, idx) => (
+            {speakers.filter(s => s.role.includes("Plenary")).map((s, idx) => (
               <SpeakerCard key={idx} speaker={s} />
             ))}
           </div>
@@ -290,11 +290,11 @@ const Speacker = () => {
         {/* Section: Invited Speakers */}
         <div>
           <div className="flex items-center gap-4 mb-10 mt-16">
-            <h2 className="text-2xl font-bold text-slate-800 whitespace-nowrap">Invited Speakers</h2>
+            <h2 className="text-2xl font-bold text-slate-800 whitespace-nowrap">Keynote Speakers</h2>
             <div className="h-[1px] w-full bg-slate-200" />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-            {speakers.filter(s => !s.role.includes("Keynote")).map((s, idx) => (
+            {speakers.filter(s => !s.role.includes("Plenary")).map((s, idx) => (
               <SpeakerCard key={idx} speaker={s} />
             ))}
           </div>

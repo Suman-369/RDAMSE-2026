@@ -1,10 +1,12 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import clgImg from "../assets/clg.jpg";
 import flyerImg from "../assets/poster.jpg";
+import flyer2Img from "../assets/flyer2.jpg";
+import flyer3Img from "../assets/flyer3.jpeg";
 import rdamselogo from "../assets/rdamselogo.png";
 import Surtechlogo from "../assets/SurTechlogo.png";
 import ConferenceInfo from "./ConferenceInfo";
@@ -94,7 +96,47 @@ const eventMoments = [
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
+const flyerSlides = [
+  { src: flyerImg, alt: "IC-RDAMSE 2026 — Official Conference Flyer" },
+  { src: flyer2Img, alt: "IC-RDAMSE 2026 — Conference Flyer 2" },
+  { src: flyer3Img, alt: "IC-RDAMSE 2026 — Conference Flyer 3" },
+];
+
 const About = () => {
+  const [flyerIndex, setFlyerIndex] = useState(0);
+  const flyerSlideRef = useRef(null);   // the animating image wrapper
+  const isAnimatingRef = useRef(false);  // guard against rapid clicks
+
+  const animateFlyer = (newIndex, direction) => {
+    if (isAnimatingRef.current) return;
+    isAnimatingRef.current = true;
+
+    const el = flyerSlideRef.current;
+    if (!el) { setFlyerIndex(newIndex); isAnimatingRef.current = false; return; }
+
+    const xOut = direction === 'next' ? -80 : 80;
+    const xIn = direction === 'next' ? 80 : -80;
+
+    // slide & fade out current
+    gsap.to(el, {
+      x: xOut, opacity: 0, duration: 0.28, ease: 'power2.in',
+      onComplete: () => {
+        setFlyerIndex(newIndex);
+        // immediately jump to incoming position then tween to centre
+        gsap.fromTo(el,
+          { x: xIn, opacity: 0 },
+          {
+            x: 0, opacity: 1, duration: 0.38, ease: 'power3.out',
+            onComplete: () => { isAnimatingRef.current = false; }
+          }
+        );
+      }
+    });
+  };
+
+  const prevFlyer = () => animateFlyer((flyerIndex - 1 + flyerSlides.length) % flyerSlides.length, 'prev');
+  const nextFlyer = () => animateFlyer((flyerIndex + 1) % flyerSlides.length, 'next');
+  const goToFlyer = (i) => { if (i !== flyerIndex) animateFlyer(i, i > flyerIndex ? 'next' : 'prev'); };
   const location = useLocation();
   // const navigate = useNavigate();
   const isAboutPage = location.pathname === "/about";
@@ -271,7 +313,7 @@ const About = () => {
       {/* ===================== FLYER SHOWCASE SECTION ===================== */}
       <section
         ref={flyerSectionRef}
-        className="relative py-20 px-4 sm:px-6 lg:px-8 bg-white overflow-hidden"
+        className="relative py-20 px-4 sm:px-6 md:px-20 lg:px-28 xl:px-32 bg-white"
       >
         {/* Decorative ambient glows */}
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#b8f29d]/20 rounded-full blur-[100px] pointer-events-none" />
@@ -298,43 +340,161 @@ const About = () => {
             </p>
           </div>
 
-          {/* Flyer frame */}
+          {/* ── Flyer Slider ─────────────────────────────────── */}
           <div
             ref={flyerWrapperRef}
-            className="relative mx-auto max-w-2xl"
+            className="relative mx-auto w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-xl xl:max-w-2xl"
           >
-            {/* Glow ring behind the card */}
-            <div className="absolute -inset-6 bg-gradient-to-br from-[#b8f29d]/40 via-[#059669]/20 to-transparent rounded-[3rem] blur-2xl pointer-events-none" />
+            {/* Ambient glow behind card */}
+            <div className="absolute -inset-4 sm:-inset-6 bg-gradient-to-br from-[#b8f29d]/40 via-[#059669]/20 to-transparent rounded-[3rem] blur-2xl pointer-events-none" />
 
-            {/* Card border gradient */}
-            <div className="relative p-1 rounded-[2rem] bg-gradient-to-br from-[#b8f29d] via-[#059669] to-[#047857] shadow-2xl shadow-[#059669]/20">
-              {/* Inner white mat */}
-              <div className="relative rounded-[1.7rem] overflow-hidden bg-white">
-                {/* The flyer image — roll reveal clip-path animation targets this */}
-                <img
-                  ref={flyerImageRef}
-                  src={flyerImg}
-                  alt="IC-RDAMSE 2026 — Official Conference Flyer"
-                  className="w-full h-auto object-contain block"
-                  style={{ willChange: "clip-path" }}
-                />
+            {/* ── CARD ── */}
+            <div className="relative p-[3px] sm:p-1 rounded-[1.5rem] sm:rounded-[2rem]
+                            bg-gradient-to-br from-[#b8f29d] via-[#059669] to-[#047857]
+                            shadow-2xl shadow-[#059669]/25">
+              <div className="relative rounded-[1.3rem] sm:rounded-[1.7rem] overflow-hidden bg-white">
+
+                {/* Animating image wrapper */}
+                <div ref={flyerSlideRef} className="w-full">
+                  <img
+                    ref={flyerImageRef}
+                    src={flyerSlides[flyerIndex].src}
+                    alt={flyerSlides[flyerIndex].alt}
+                    className="w-full h-auto object-contain block"
+                    style={{ willChange: 'transform, opacity' }}
+                  />
+                </div>
+
+                {/* ── MOBILE arrows  (overlay inside card) ── */}
+                {/* Left */}
+                <button
+                  onClick={prevFlyer}
+                  aria-label="Previous flyer"
+                  className="
+                    md:hidden
+                    absolute left-2 top-1/2 -translate-y-1/2 z-20
+                    w-9 h-9 flex items-center justify-center
+                    rounded-full
+                    bg-[#059669] text-white
+                    shadow-lg shadow-[#059669]/50
+                    border-2 border-white/30
+                    hover:scale-110 active:scale-95
+                    transition-transform duration-200
+                  "
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.8}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+                {/* Right */}
+                <button
+                  onClick={nextFlyer}
+                  aria-label="Next flyer"
+                  className="
+                    md:hidden
+                    absolute right-2 top-1/2 -translate-y-1/2 z-20
+                    w-9 h-9 flex items-center justify-center
+                    rounded-full
+                    bg-[#059669] text-white
+                    shadow-lg shadow-[#059669]/50
+                    border-2 border-white/30
+                    hover:scale-110 active:scale-95
+                    transition-transform duration-200
+                  "
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.8}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
               </div>
             </div>
 
-            {/* Floating badge */}
+            {/* ── DESKTOP arrows (outside the card, large & glowing) ── */}
+            {/* Left */}
+            <button
+              onClick={prevFlyer}
+              aria-label="Previous flyer"
+              className="
+                hidden md:flex
+                absolute left-0 top-1/2
+                -translate-y-1/2 -translate-x-[calc(100%+20px)]
+                z-20
+                w-14 h-14 items-center justify-center
+                rounded-full
+                bg-gradient-to-br from-[#059669] to-[#047857]
+                text-white
+                shadow-xl shadow-[#059669]/60
+                ring-4 ring-[#b8f29d]/40
+                hover:ring-[#059669]/70 hover:scale-110 hover:shadow-2xl
+                active:scale-95
+                transition-all duration-300
+                group
+              "
+            >
+              {/* Pulsing halo */}
+              <span className="absolute inset-0 rounded-full bg-[#059669]/30 animate-ping" />
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 relative z-10 transform group-hover:-translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.8}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+
+            {/* Right */}
+            <button
+              onClick={nextFlyer}
+              aria-label="Next flyer"
+              className="
+                hidden md:flex
+                absolute right-0 top-1/2
+                -translate-y-1/2 translate-x-[calc(100%+20px)]
+                z-20
+                w-14 h-14 items-center justify-center
+                rounded-full
+                bg-gradient-to-br from-[#059669] to-[#047857]
+                text-white
+                shadow-xl shadow-[#059669]/60
+                ring-4 ring-[#b8f29d]/40
+                hover:ring-[#059669]/70 hover:scale-110 hover:shadow-2xl
+                active:scale-95
+                transition-all duration-300
+                group
+              "
+            >
+              <span className="absolute inset-0 rounded-full bg-[#059669]/30 animate-ping" />
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 relative z-10 transform group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.8}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+
+            {/* ── Dot indicators ── */}
+            <div className="mt-6 flex items-center justify-center gap-2">
+              {flyerSlides.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => goToFlyer(i)}
+                  aria-label={`Go to flyer ${i + 1}`}
+                  className={`rounded-full transition-all duration-300 ${i === flyerIndex
+                      ? 'w-7 h-3 bg-[#059669] shadow-md shadow-[#059669]/40'
+                      : 'w-3 h-3 bg-gray-300 hover:bg-[#b8f29d]'
+                    }`}
+                />
+              ))}
+            </div>
+
+            {/* ── Floating slide-counter badge ── */}
             <div
               ref={flyerBadgeRef}
-              className="absolute -bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-2 px-6 py-2.5 rounded-full bg-gray-900 text-white shadow-xl shadow-black/20 whitespace-nowrap"
+              className="mt-4 mx-auto w-max flex items-center gap-2 px-5 py-2 rounded-full
+                         bg-gray-900 text-white shadow-xl shadow-black/20 whitespace-nowrap"
             >
               <span className="w-2 h-2 rounded-full bg-[#b8f29d] animate-pulse" />
-              <span className="text-xs font-black uppercase tracking-widest">
-                2nd International Conference
+              <span className="text-[11px] font-black uppercase tracking-widest">
+                {flyerIndex + 1}&nbsp;/&nbsp;{flyerSlides.length}&nbsp;&nbsp;·&nbsp;&nbsp;2nd International Conference
               </span>
             </div>
           </div>
 
-          {/* Bottom spacing for the badge */}
-          <div className="h-12" />
+          {/* Bottom spacing */}
+          <div className="h-10 sm:h-16" />
         </div>
       </section>
 
@@ -410,106 +570,134 @@ const About = () => {
         {/* Decorative Background */}
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#b8f29d]/10 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/4 pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-12 lg:gap-20 items-center">
-          {/* Left: Image Section */}
-          <div ref={imageRef} className="w-full lg:w-1/2">
-            <div className="relative group">
-              <div className="absolute -inset-4 bg-gradient-to-r from-[#b8f29d] to-[#059669] rounded-[2.5rem] opacity-20 blur-2xl group-hover:opacity-40 transition-opacity duration-500" />
-              <div className="relative aspect-[4/5] sm:aspect-video lg:aspect-[4/5] rounded-[2rem] overflow-hidden shadow-2xl">
-                <img
-                  src={clgImg}
-                  alt="Institute Campus"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-                <div className="absolute bottom-8 left-8">
-                  <p className="text-white font-bold text-lg">Our Campus</p>
-                  <p className="text-white/80 text-sm">Sur Tech, Kolkata</p>
+        <div className="max-w-7xl mx-auto">
+
+          {/* ── TOP: Image (left) + First 4 paragraphs (right) ── */}
+          <div className="flex flex-col lg:flex-row gap-10 lg:gap-14 items-start mb-8">
+
+            {/* Left: College Photo + Website link below it */}
+            <div ref={imageRef} className="w-full lg:w-[44%] flex-shrink-0 flex flex-col">
+              <div className="relative group">
+                <div className="absolute -inset-3 bg-gradient-to-r from-[#b8f29d] to-[#059669] rounded-2xl opacity-20 blur-2xl group-hover:opacity-40 transition-opacity duration-500" />
+                <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+                  <img
+                    src={clgImg}
+                    alt="Institute Campus"
+                    className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                  <div className="absolute bottom-5 left-5">
+                    <p className="text-white font-bold text-base">Our Campus</p>
+                    <p className="text-white/75 text-sm">Sur Tech, Kolkata</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
 
-          {/* Right: Content Section */}
-          <div ref={contentRef} className="w-full lg:w-1/2 flex flex-col">
-            <div className="inline-flex items-center gap-3 mb-6">
-              <span className="w-12 h-1.5 bg-[#059669] rounded-full" />
-              <span className="text-sm font-black uppercase tracking-[0.3em] text-[#059669]">The Legacy</span>
-            </div>
-
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-gray-900 mb-8 leading-[1.1]">
-              About the Institute
-            </h2>
-
-            <div className="space-y-6 text-lg md:text-xl text-gray-600 leading-relaxed font-medium">
-              <p>
-                Dr. Sudhir Chandra Sur Institute of Technology and Sports Complex (formerly known as Dr. Sudhir Chandra Sur Degree Engineering College)
-                was established under the auspices of JIS Foundation, a pioneer in educational excellence.
-              </p>
-              <p>
-                Renowned for its research culture and 15-year legacy in Engineering and Science education, our institute is strategically located near Kolkata's major transit hubs, bridging academic rigor with urban connectivity.
-              </p>
-              <p className="p-8 bg-white rounded-3xl border border-gray-100 shadow-xl shadow-gray-200/50">
-                <span className="text-[#059669] font-black">Environmental Harmony:</span> Our campus, titled "Green Field," is a virtual paradise of lush greenery—a perfect atmosphere for academic endeavors and ecological consciousness.
-              </p>
-            </div>
-
-            <div className="mt-10 flex flex-wrap gap-4 items-center">
-              <div className="px-6 py-3 rounded-2xl bg-white border border-gray-100 shadow-sm">
-                <p className="text-2xl font-black text-gray-900">15+</p>
-                <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Years Legacy</p>
-              </div>
-              <div className="px-6 py-3 rounded-2xl bg-white border border-gray-100 shadow-sm">
-                <p className="text-2xl font-black text-[#059669]">UGC</p>
-                <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Recognized</p>
-              </div>
-
-              {/* Website link — styled as a recognisable external-page button */}
+              {/* Website link — sits directly under the photo */}
               <a
                 href="https://www.surtech.edu.in/"
                 target="_blank"
                 rel="noopener noreferrer"
                 id="surtech-website-link"
-                className="group inline-flex items-center gap-2.5 px-5 py-3 rounded-2xl
-                         bg-white border border-gray-100 shadow-sm
+                className="mt-4 group inline-flex items-center justify-center gap-2.5 px-5 py-3 rounded-2xl
+                         bg-white border border-gray-100 shadow-sm w-full
                          hover:border-[#059669] hover:shadow-md hover:shadow-[#059669]/10
                          transition-all duration-300 cursor-pointer"
                 title="Visit SurTech official website"
               >
-                {/* Globe / webpage icon */}
                 <span className="flex items-center justify-center w-8 h-8 rounded-xl bg-[#059669]/10 group-hover:bg-[#059669]/20 transition-colors duration-300">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-4 h-4 text-[#059669]"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round"
-                      d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zm0 0c-2.5 2.5-4 5.8-4 10s1.5 7.5 4 10m0-20c2.5 2.5 4 5.8 4 10s-1.5 7.5-4 10M2 12h20" />
+                  <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-[#059669]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zm0 0c-2.5 2.5-4 5.8-4 10s1.5 7.5 4 10m0-20c2.5 2.5 4 5.8 4 10s-1.5 7.5-4 10M2 12h20" />
                   </svg>
                 </span>
-
                 <span className="flex flex-col leading-tight">
                   <span className="text-xs font-black text-gray-900 uppercase tracking-widest">Official Website</span>
-                  <span className="text-[10px] font-semibold text-[#059669] truncate max-w-[110px]">surtech.edu.in</span>
+                  <span className="text-[10px] font-semibold text-[#059669]">surtech.edu.in</span>
                 </span>
-
-                {/* External-link arrow — hints it opens a webpage */}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-3.5 h-3.5 text-gray-400 group-hover:text-[#059669] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2.5}
-                >
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5 text-gray-400 group-hover:text-[#059669] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6m0 0v6m0-6L10 14" />
                 </svg>
               </a>
             </div>
+
+            {/* Right: Section heading + first 4 paragraphs */}
+            <div ref={contentRef} className="w-full lg:w-[56%] flex flex-col">
+              <div className="inline-flex items-center gap-3 mb-4">
+                <span className="w-10 h-1.5 bg-[#059669] rounded-full" />
+                <span className="text-xs font-black uppercase tracking-[0.3em] text-[#059669]">The Legacy</span>
+              </div>
+
+              <h2 className="text-3xl sm:text-4xl lg:text-[2.6rem] font-black text-gray-900 mb-5 leading-tight">
+                About the Institute
+              </h2>
+
+              <div className="space-y-3 text-[15px] text-gray-800 leading-[1.75] font-bold text-justify">
+                <p>
+                  Dr. Sudhir Chandra Sur Institute of Technology &amp; Sports Complex (formerly
+                  known as Dr. Sudhir Chandra Sur Degree Engineering College) was established
+                  under the auspices of JIS Foundation under Section 2(f) of the UGC Act, 1956.
+                </p>
+                <p>
+                  This Institute, which was founded in 2009, is now well-known for its innovative
+                  and rigorous curriculum, which has produced experts in a variety of businesses
+                  and sectors in India and beyond.
+                </p>
+                <p>
+                  The Dr. Sudhir Chandra Sur Institute of Technology &amp; Sports Complex, which
+                  has been known for its research culture and excellence in imparting Engineering,
+                  Science, and Management education for the past 12 years and is located near the
+                  Dum Dum Metro Railway Station and International Airport, is known for its research
+                  culture and excellence in imparting Engineering, Science, and Management education.
+                </p>
+                <p>
+                  The institute is a virtual paradise of pristine environment and beautiful beauty,
+                  nestled in a rural setting of lush green fields. The beautiful avenue of trees and
+                  flowers on campus, aptly titled &quot;Green Field,&quot; attest to the importance of ecology
+                  and the environment. The atmosphere on campus is ideal for academic endeavours.
+                </p>
+              </div>
+            </div>
           </div>
+
+          {/* ── FULL-WIDTH: Remaining paragraphs ── */}
+          <div className="space-y-3 text-[15px] text-gray-800 leading-[1.75] font-bold text-justify">
+            <p>
+              SurTech has taken a worldwide approach to research and teaching, focusing on foreign
+              viewpoints and knowledge. The Institute is dedicated to greatness and strives for it
+              constantly, accepting nothing less than the best. Its faculty, which includes
+              intellectual giants from India and internationally, is the Institute's bedrock. SurTech
+              is in the forefront of using cutting-edge technology and preparing students for a
+              globalised economy while also promoting holistic learning, unbiased knowledge,
+              industry-focused skills, ethics, a cosmopolitan outlook, and accountability for actions.
+            </p>
+            <p>
+              SurTech is establishing a national and international footprint through partnerships
+              with world-class universities, study abroad programmes, and overseas internships and
+              research.
+            </p>
+            <p>
+              It provides a comprehensive curriculum across a wide range of engineering degree
+              programmes. These programmes provide students with a variety of academic options.
+            </p>
+            <p>
+              The Institute provides great educational opportunities for youth from all over the
+              world at a reasonable cost. Through its social responsibility efforts, the Institute
+              also provides unwavering support for community services.
+            </p>
+          </div>
+
+          {/* ── Stats + Website link ── */}
+          <div className="mt-10 flex flex-wrap gap-4 items-center">
+            <div className="px-6 py-3 rounded-2xl bg-white border border-gray-100 shadow-sm">
+              <p className="text-2xl font-black text-gray-900">15+</p>
+              <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Years Legacy</p>
+            </div>
+            <div className="px-6 py-3 rounded-2xl bg-white border border-gray-100 shadow-sm">
+              <p className="text-2xl font-black text-[#059669]">UGC</p>
+              <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Recognized</p>
+            </div>
+          </div>
+
         </div>
       </section>
       {/* ==================== PREVIOUS YEARS SECTION ==================== */}

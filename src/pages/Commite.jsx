@@ -168,7 +168,7 @@ const Committee = () => {
               {/* Jt. Co-Convenor */}
               <h3 className="text-xl font-black text-gray-900 mb-6 flex items-center gap-3">
                 <span className="w-2 h-6 bg-black rounded-full" />
-                JT. CO-CONVENOR
+                CO-CONVENOR
               </h3>
               <div className="space-y-4">
                 <div className="p-6 bg-white rounded-2xl border border-gray-100 shadow-lg">
@@ -182,7 +182,7 @@ const Committee = () => {
             <div className="lg:col-span-2">
               <h3 className="text-xl font-black text-gray-900 mb-6 flex items-center gap-3">
                 <span className="w-2 h-6 bg-black rounded-full" />
-                MEMBERS
+                OrGANIZING MEMBERS
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {organizingCommittee.members.map((m, idx) => (

@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {Link} from "react-router-dom"
+import templateDoc from "../assets/Extended-abstract-template_2nd RDAMSE_2026.doc";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -414,12 +415,27 @@ const Callforpaper = () => {
             Be a part of the global materials science community. Submit your work today and contribute to sustainable innovation.
           </p>
           <div className="flex flex-wrap justify-center gap-8">
-            <button className="px-12 py-5 bg-[#b8f29d] text-gray-900 font-black rounded-full hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-xl shadow-emerald-400/20">
+            {/* Submit Manuscript → opens registration Google Form */}
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSe4H1C30c-7QTIqLL1JaZKMSgCNBak-tdk-l724HMWm-r4xrw/viewform?usp=send_form"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-12 py-5 bg-[#b8f29d] text-gray-900 font-black rounded-full hover:scale-105 active:scale-95 transition-all cursor-pointer shadow-xl shadow-emerald-400/20 inline-flex items-center gap-2"
+            >
               Submit Manuscript
-            </button>
-            <button className="px-12 py-5 bg-white/5 backdrop-blur-md border border-white/10 text-white font-black rounded-full hover:bg-white/10 transition-all cursor-pointer">
+            </a>
+
+            {/* Download Template → downloads the .doc file */}
+            <a
+              href={templateDoc}
+              download="Extended-abstract-template_2nd-RDAMSE-2026.doc"
+              className="px-12 py-5 bg-white/5 backdrop-blur-md border border-white/10 text-white font-black rounded-full hover:bg-white/10 transition-all cursor-pointer inline-flex items-center gap-2"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              </svg>
               Download Template
-            </button>
+            </a>
           </div>
         </div>
       </section>

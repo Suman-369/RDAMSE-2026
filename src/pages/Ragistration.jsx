@@ -189,10 +189,20 @@ const Ragistration = () => {
           {/* Deadline pill */}
           <div className="deadline-badge inline-flex items-center gap-3 px-6 py-3 bg-red-50 border border-red-200 rounded-full shadow-sm">
             <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+
             <span className="text-sm font-black text-red-600 uppercase tracking-wider">
               Last Date of Registration:&nbsp;
             </span>
-            <span className="text-sm font-black text-red-700">31 April 2026</span>
+
+            {/* Old date (cut) */}
+            <span className="text-sm font-bold text-red-400 line-through">
+              27 April 2026
+            </span>
+
+            {/* New date (highlighted) */}
+            <span className="text-sm font-black text-red-700">
+              30 April 2026
+            </span>
           </div>
 
           <div className="reg-hero-text w-24 h-1.5 bg-gradient-to-r from-[#b8f29d] to-[#059669] mx-auto rounded-full mt-10" />
@@ -264,7 +274,7 @@ const Ragistration = () => {
       <section className="relative z-10 py-12 px-4 md:px-8 pb-24">
         <div className="max-w-5xl mx-auto bank-section">
           <div className="bg-white/80 backdrop-blur-2xl border border-white ring-1 ring-black/5 rounded-[3rem] shadow-2xl shadow-gray-200/60 overflow-hidden">
-            
+
             {/* Card header */}
             <div className="relative bg-gray-900 px-8 md:px-14 py-10 overflow-hidden rounded-t-[3rem]">
               {/* Glow blobs */}
@@ -320,9 +330,8 @@ const Ragistration = () => {
 
                   {/* Value */}
                   <span
-                    className={`text-sm md:text-base font-black text-gray-900 leading-snug break-all ${
-                      detail.mono ? "font-mono tracking-wider text-[#059669]" : ""
-                    }`}
+                    className={`text-sm md:text-base font-black text-gray-900 leading-snug break-all ${detail.mono ? "font-mono tracking-wider text-[#059669]" : ""
+                      }`}
                   >
                     {detail.value}
                   </span>
