@@ -14,6 +14,10 @@ import ddj from "../assets/ddj.jpeg"
 import mm from "../assets/mm.jpg"
 import jm from "../assets/jm.jpg"
 import sj from "../assets/sj.jpg"
+import miki from "../assets/miki.webp"
+import srabanti from "../assets/srabanti.jpg"
+import de from "../assets/de.jpg";
+import ms from "../assets/ms.jpg"
 
 
 
@@ -74,8 +78,8 @@ const speakers = [
     name: "Prof. Miki Hasegawa", 
     role: "Keynote Speaker", 
     org: "Aoyama Gakuin University, Japan",
-    link: "https://researchmap.jp/read0044670?lang=en",
-    image: null // Placeholder
+    link: "https://www.researchgate.net/profile/Miki-Hasegawa",
+    image: miki 
   },
   { 
     name: "Prof. A. K. Ray", 
@@ -138,7 +142,7 @@ const speakers = [
     role: "Keynote Speaker", 
     org: "Principal Scientist, CSIR-CGCRI, Kolkata",
     link: "https://www.cgcri.res.in/research/research-divisions/sensor-actuator-division/dr-srabanti-ghosh/",
-    image: null // Placeholder
+    image: srabanti // Placeholder
   },
   { 
     name: "Prof. D. Jana", 
@@ -159,21 +163,21 @@ const speakers = [
     role: "Keynote Speaker", 
     org: "MAKAUT, Kolkata",
     link: "https://scholar.google.co.in/citations?user=vPj7n0QAAAAJ&hl=en",
-    image: null // Placeholder
+    image: de // Placeholder
   },
   { 
     name: "Prof. M. Mondal", 
     role: "Keynote Speaker", 
     org: "IACS, Kolkata",
-    link: "https://iacs.res.in/athusers/index.php?navid=0&userid=IACS0039",
+    link: "https://makautwb.ac.in/plug.php?e=WBUTtool&f=faculty_profile&user_id=36",
     image: mm
   },
   { 
     name: "Dr. M. Samanta", 
     role: "Keynote Speaker", 
     org: "Scientist, DRDO, Kolkata",
-    link: "https://www.researchgate.net/profile/Moumita-Samanta",
-    image: null // Placeholder
+    link: "https://www.linkedin.com/in/dr-madhupriya-samanta-8360b3b3/",
+    image: ms // Placeholder
   },
   { 
     name: "Dr. A. Ghosal", 
@@ -313,33 +317,103 @@ const Speacker = () => {
           </div>
         </div> */}
 
-        {/* CTA Section */}
-        <section className="mt-32 relative group">
-          <div className="absolute inset-0 bg-gradient-to-r from-emerald-600 to-blue-600 rounded-[3rem] blur-2xl opacity-10 group-hover:opacity-20 transition-opacity duration-700" />
-          <div className="relative p-12 md:p-20 rounded-[3rem] bg-slate-900 border border-slate-800 text-center overflow-hidden">
-            {/* Background Pattern */}
-            <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-emerald-500/10 rounded-full blur-[100px] -mr-48 -mt-48" />
-            <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-blue-500/10 rounded-full blur-[100px] -ml-48 -mb-48" />
-            
-            <div className="relative z-10 max-w-2xl mx-auto">
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Contribute to IC-RDAMSE 2026</h2>
-              <p className="text-slate-400 text-lg mb-10 leading-relaxed font-medium">
-                Share your insights and research findings with a global audience of experts and researchers.
-              </p>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <button 
-                  disabled
-                  className="px-10 py-4 bg-emerald-500 hover:bg-emerald-400 text-white rounded-2xl font-bold transition-all shadow-lg shadow-emerald-500/20 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Coming Soon
-                </button>
-                <div className="px-6 py-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
-                  <span className="text-slate-400 text-sm font-semibold italic">Nomination process opening shortly</span>
-                </div>
-              </div>
-            </div>
+        {/* ═══════════════ SESSION CHAIRS ═══════════════ */}
+        <div className="mt-20">
+          <div className="flex items-center gap-4 mb-10">
+            <h2 className="text-2xl font-bold text-slate-800 whitespace-nowrap">Session Chairs</h2>
+            <div className="h-[1px] w-full bg-slate-200" />
           </div>
-        </section>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-5">
+            {[
+              { name: "Dr. A. Basu",             role: "Assistant Professor",        org: "Sripat Singh College, Murshidabad",    image: null },
+              { name: "Dr. B. Dutta",             role: "Assistant Professor",        org: "KIIT University",                      image: null },
+              { name: "Dr. N. S. Das",            role: "Assistant Professor",        org: "Techno International, Batanagar",      image: null },
+              { name: "Dr. P. Saha",              role: "Associate Professor",        org: "JISIASR, Kolkata",                     image: null },
+              { name: "Dr. D. Dastidar",          role: "Associate Professor",        org: "GNIPST, Kolkata",                      image: null },
+              { name: "Dr. D. Mallick",           role: "Researcher",                 org: "Mrinalini Datta Mahavidyapith",        image: null },
+              { name: "Dr. D. Sarkar",            role: "Research Associate Professor", org: "SRM-IST",                            image: null },
+              { name: "Dr. B. Kundu",             role: "Faculty",                    org: "GNIT",                                 image: null },
+              { name: "Dr. D. Banerjee",          role: "Associate Professor",        org: "Teerthanker Mahaveer University",      image: null },
+              { name: "Dr. Subhalakshmi Ghosh",   role: "Director",                   org: "Subhami Biopharma, Kolkata",           image: null },
+              { name: "Dr. Kamal Krishna Sarkar", role: "Principal",                  org: "Sripat Singh College, Murshidabad",    image: null },
+              { name: "Dr. I. Bhattacharya",      role: "Faculty",                    org: "GNIT",                                 image: null },
+              { name: "Dr. G. Roymahapatra",      role: "Associate Professor",        org: "Haldia Institute of Technology, Haldia", image: null },
+              { name: "Dr. D. Saha",              role: "Faculty",                    org: "NIT",                                  image: null },
+              { name: "Dr. B. Das",               role: "Faculty",                    org: "JISIASR, Kolkata",                     image: null },
+              { name: "Dr. S. Ganguly",           role: "Faculty",                    org: "NIT",                                  image: null },
+            ].map((chair, idx) => {
+              /* Auto-generate initials from capitalized name words */
+              const initials = chair.name
+                .split(' ')
+                .filter(w => /^[A-Z]/.test(w))
+                .slice(0, 2)
+                .map(w => w[0])
+                .join('');
+
+              return (
+                <div
+                  key={idx}
+                  className="group relative rounded-2xl bg-white border border-slate-100
+                    shadow-sm hover:shadow-xl hover:shadow-emerald-500/10
+                    hover:border-emerald-200 hover:-translate-y-1
+                    transition-all duration-300 overflow-hidden flex flex-col"
+                >
+                  {/* Top accent bar on hover */}
+                  <div className="absolute top-0 inset-x-0 h-0.5 bg-gradient-to-r from-emerald-400 to-emerald-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
+
+                  {/* ── Photo / Avatar area ── */}
+                  <div className="relative bg-gradient-to-br from-slate-50 to-emerald-50 flex items-center justify-center pt-6 pb-4 px-4">
+                    {/* Subtle glow behind photo */}
+                    <div className="absolute inset-0 bg-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                    {chair.image ? (
+                      /* Real photo */
+                      <div className="relative w-20 h-20 rounded-full overflow-hidden ring-4 ring-white shadow-md group-hover:ring-emerald-200 transition-all duration-300">
+                        <img
+                          src={chair.image}
+                          alt={chair.name}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          onError={e => { e.currentTarget.style.display = 'none'; e.currentTarget.nextSibling.style.display = 'flex'; }}
+                        />
+                        {/* Fallback if image errors */}
+                        <div
+                          style={{ display: 'none' }}
+                          className="absolute inset-0 bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center text-white font-black text-xl"
+                        >
+                          {initials}
+                        </div>
+                      </div>
+                    ) : (
+                      /* Initials avatar (no photo yet) */
+                      <div className="w-20 h-20 rounded-full ring-4 ring-white shadow-md
+                        bg-gradient-to-br from-emerald-400 to-emerald-700
+                        flex items-center justify-center
+                        text-white font-black text-xl
+                        group-hover:ring-emerald-200 group-hover:scale-105
+                        transition-all duration-300">
+                        {initials}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* ── Info area ── */}
+                  <div className="flex flex-col items-center text-center px-3 pb-5 pt-2 flex-1">
+                    <p className="font-bold text-slate-800 text-[13px] leading-snug mb-1 group-hover:text-emerald-700 transition-colors duration-200">
+                      {chair.name}
+                    </p>
+                    <span className="inline-block text-[9px] font-black uppercase tracking-widest text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full mb-2">
+                      {chair.role}
+                    </span>
+                    <p className="text-[10px] text-black font-medium leading-relaxed">
+                      {chair.org}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
     </div>
   );
