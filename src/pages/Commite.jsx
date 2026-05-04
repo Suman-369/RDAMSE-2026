@@ -4,236 +4,557 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
+// ─── Data ────────────────────────────────────────────────────────────────────
+
+const chiefPatron = { name: 'Sardar Taranjit Singh', role: 'MD, JIS Group' };
+
+const patrons = [
+  { name: 'Sardar Haranjit Singh',       role: 'Joint MD, JIS Group' },
+  { name: 'Sardar Amrik Singh',           role: 'Deputy MD, JIS Group' },
+  { name: 'Ms Manpreet Kaur',             role: 'CEO, JIS Group' },
+  { name: 'Sardar Simarpreet Singh',      role: 'Director, JIS Group' },
+  { name: 'Ms Jaspreet Kaur',             role: 'Director, JIS Group' },
+  { name: 'Sardar Harjot Singh',          role: 'Director, JIS Group' },
+  { name: 'Sardar Amanjot Singh',         role: 'Director, JIS Group' },
+  { name: 'Sardar Anmol Singh Narula',    role: 'Director, JIS Group' },
+  { name: 'Prof. (Dr.) Ajay Kumar Ray',   role: 'Director JISIASR, Kolkata, India' },
+  { name: 'Prof. (Dr.) Neeraj Saxena',    role: 'Pro-Chancellor, JIS University, Kolkata' },
+];
+
+const advisoryCommittee = [
+  { name: 'Prof. Ashok Kumar Mishra',       role: 'IIT-Madras' },
+  { name: 'Prof. Joe Otsuki',               role: 'Nihon University, Japan' },
+  { name: 'Prof. (Dr.) Dibakar Dhara',      role: 'IIT, Kharagpur' },
+  {
+    name: 'Dr. Srabanti Ghosh',
+    role: 'Principal Scientist, CGCRI, Kolkata & Convener, Society for Material Chemistry, Kolkata Chapter',
+  },
+  {
+    name: 'Prof. (Dr.) N. R. Bandyopadhyay',
+    role: 'School of Materials Science and Engineering, IIEST, Shibpur',
+  },
+  {
+    name: 'Prof. (Dr.) K. K. Chattopadhyay',
+    role: 'Dept. of Physics, School of Materials Science & Nanotechnology, Jadavpur University, Kolkata',
+  },
+  {
+    name: 'Dr. Jayanta Mukhopadhyay',
+    role: 'Senior Principal Scientist & Head, Energy Materials & Devices Division, CGCRI, Kolkata',
+  },
+  {
+    name: 'Prof. Chittaranjan Sinha',
+    role: 'Jadavpur University & Secretary, Indian Photobiology Society',
+  },
+  { name: 'Prof. (Dr.) Rahul Banerjee',     role: 'IISER, Kolkata' },
+  {
+    name: 'Prof. (Dr.) Debnarayan Jana',
+    role: 'Dept. of Physics, University of Calcutta, Kolkata',
+  },
+  { name: 'Dr. Avik Ghosal',               role: 'Senior Manager, Exide Industry, Kolkata' },
+  { name: 'Prof. Kamal Krishna Sarkar',     role: 'Sripat Singh College' },
+  {
+    name: 'Dr. Subhalakshmi Ghosh',
+    role: 'Subhami Biopharma Pvt. Ltd., Kolkata',
+  },
+  {
+    name: 'Dr. Gourisankar Roymahapatra',
+    role: 'Haldia Institute of Technology',
+  },
+];
+
+const sponsors = [
+  {
+    name: 'Metrohm Company',
+    desc: 'A leading global provider of high-precision instruments for chemical analysis, including ion chromatography and electrochemistry solutions.',
+  },
+  {
+    name: 'Chempure Private Limited',
+    desc: 'Supplier of high-quality laboratory chemicals, reagents, and consumables for research and industrial applications.',
+  },
+  {
+    name: 'Guardian Company',
+    desc: 'Provider of safety equipment, laboratory instruments, and industrial support solutions.',
+  },
+  {
+    name: "Researchers' Pal Company",
+    desc: 'Offers research support services, academic assistance, and scientific resources for scholars and institutions.',
+  },
+];
+
+const organizingCommittee = {
+  programChair: {
+    name: 'Prof. (Dr.) Saradindu Panda',
+    role: 'Principal, SURTECH · Program Chair, RDAMSE 2026',
+  },
+  convenor: { name: 'Dr. Dipankar Das',  role: 'HoD, BSH, SURTECH' },
+  coConvenor: { name: 'Dr. Biswajit Das', role: 'Asst. Prof., BSH, SURTECH · Convener R&D' },
+  members: [
+    { name: 'Dr. Soumen Basu',              role: 'Registrar, SURTECH' },
+    { name: 'Dr. Amrut Ranjan Jena',        role: 'HOD CSE, SURTECH' },
+    { name: 'Ms. Madhusmita Mishra',        role: 'TIC, CSE-AIML, SURTECH' },
+    { name: 'Dr. Sayantan Chakraborty',     role: 'HOD EE, SURTECH' },
+    { name: 'Dr. Anirban Neogi',            role: 'IQAC Co-coordinator & HOD, ECE, SURTECH' },
+    { name: 'Dr. Arpita Chatterjee',        role: 'HOD, ME, SURTECH' },
+    { name: 'Mr. Baibaswata Das',           role: 'TIC, CE, SURTECH' },
+    { name: 'Mr. Kalayan Banerjee',         role: 'TIC, AUE, SURTECH' },
+    { name: 'Dr. Arindam Sadhu',            role: 'Convener, IIC, SURTECH' },
+    { name: 'Dr. Amit Samadder',            role: 'Asst. Prof., BSH, SURTECH' },
+    { name: 'Dr. Debasish Sadhukhan',       role: 'Asst. Prof., BSH, SURTECH' },
+    { name: 'Dr. Sukhendu Sadhukhan',       role: 'Asst. Prof., BSH, SURTECH' },
+    { name: 'Dr. Kausik Sardar',            role: 'Asst. Prof., BSH, SURTECH' },
+    { name: 'Dr. Shayari Basu',             role: 'Asst. Prof., BSH, SURTECH' },
+    { name: 'Ms. Debasmita Roy Chowdhury',  role: 'Asst. Prof., BSH, SURTECH' },
+    { name: 'Ms. Nibedita Biswas',          role: 'Asst. Prof., BSH, SURTECH' },
+    { name: 'Ms. Neha Saha',               role: 'Asst. Prof., BSH, SURTECH' },
+  ],
+};
+
+// ─── Sub-components ───────────────────────────────────────────────────────────
+
+const SectionHeader = ({ title, subtitle }) => (
+  <div className="cmt-section-header">
+    <h2 className="cmt-section-title">{title}</h2>
+    <p className="cmt-section-subtitle">{subtitle}</p>
+    <div className="cmt-divider" />
+  </div>
+);
+
+const MemberCard = ({ name, role, accent = false }) => (
+  <div className={`cmt-member-card${accent ? ' cmt-member-card--accent' : ''}`}>
+    <div className="cmt-member-avatar">{name.charAt(0)}</div>
+    <div>
+      <p className="cmt-member-name">{name}</p>
+      <p className="cmt-member-role">{role}</p>
+    </div>
+  </div>
+);
+
+// ─── Component ────────────────────────────────────────────────────────────────
+
 const Committee = () => {
-  const sectionRef = useRef(null);
+  const pageRef = useRef(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Hero Animation
-      gsap.from(".hero-content > *", {
+      gsap.from('.cmt-hero > *', {
         y: 60,
         opacity: 0,
         duration: 1.2,
-        stagger: 0.2,
-        ease: "power4.out"
+        stagger: 0.18,
+        ease: 'power4.out',
       });
 
-      // Section Fade-ins
-      const sections = gsap.utils.toArray('.committee-section');
-      sections.forEach((section) => {
-        gsap.from(section, {
+      gsap.utils.toArray('.cmt-animate').forEach((el) => {
+        gsap.from(el, {
           scrollTrigger: {
-            trigger: section,
-            start: "top 85%",
-            toggleActions: "play none none none"
+            trigger: el,
+            start: 'top 88%',
+            toggleActions: 'play none none none',
           },
-          y: 50,
+          y: 44,
           opacity: 0,
-          duration: 1,
-          ease: "power3.out"
+          duration: 0.9,
+          ease: 'power3.out',
         });
       });
-    }, sectionRef);
+    }, pageRef);
 
     return () => ctx.revert();
   }, []);
 
-  const organizingCommittee = {
-    chiefPatron: { name: "Sardar Taranjit Singh", role: "MD, JIS Group" },
-    patrons: [
-      { name: "Sardar Haranjit Singh", role: "Joint MD, JIS Group" },
-      { name: "Sardar Amrik Singh", role: "Deputy MD, JIS Group" },
-      { name: "Sardar Simarpreet Singh", role: "Director, JIS Group" },
-      { name: "Ms Manpreet Kaur", role: "CEO, JIS Group" },
-      { name: "Ms Jaspreet Kaur", role: "Director, JIS Group" },
-      { name: "Sardar Harjot Singh", role: "Director, JIS Group" },
-      { name: "Sardar Amanjot Singh", role: "Director, JIS Group" },
-      { name: "Sardar Anmol Singh Narula", role: "Director, JIS Group" },
-      { name: "Prof. (Dr.) Ajay Kumar Ray", role: "Director JISIASR, Kolkata" },
-      { name: "Prof. (Dr.) Neeraj Saxena", role: "Pro Chancellor, JIS University" },
-    ],
-    programChair: { name: "Prof. (Dr.) Saradindu Panda", role: "Principal, SURTECH" },
-    convenor: { name: "Dr. Dipankar Das", role: "HoD, BSH, SurTech" },
-    jtCoConvenor: { name: "Dr. Biswajit Das", role: "Asst. Prof., BSH, SurTech" },
-    members: [
-      { name: "Dr. Sukhendu Sadhukhan", role: "Asst. Prof., BSH, SurTech" },
-      { name: "Dr. Kausik Sardar", role: "Asst. Prof., BSH, SurTech" },
-      { name: "Ms. Neha Saha", role: "Asst. Prof., BSH, SurTech" },
-      { name: "Dr. Debasish Sadhukhan", role: "Asst. Prof., BSH, SurTech" },
-      { name: "Dr. Amit Samadder", role: "Asst. Prof., BSH, SurTech" },
-      { name: "Ms. Debasmita Roy Chowdhury", role: "Asst. Prof., BSH, SurTech" },
-      { name: "Ms. Nibedita Biswas", role: "Asst. Prof., BSH, SurTech" },
-      { name: "Dr. Shayari Basu", role: "Asst. Prof., BSH, SurTech" },
-    ]
-  };
-
-  const advisoryCommittee = [
-    { name: "Prof. (Dr.) Nitin Chattopadhyay", role: "Program Chair, RDAMSE 2025 | President, Indian Photobiology Society | Professor, Dept. of Chemistry, Jadavpur University" },
-    { name: "Prof. (Dr.) Chatiiranjan Sinha", role: "Program Chair, RDAMSE 2025 | Secretary, Indian Photobiology Society | Professor, Dept. of Chemistry, Jadavpur University" },
-    { name: "Dr. Amrut Ranjan Jena", role: "HOD CSE, DSCSITSC" },
-    { name: "Dr. Anitava Halder", role: "HOD, CSE-AIML, DSCSITSC" },
-    { name: "Dr. Sayantan Chakraborty", role: "HOD EE, DSCSITSC" },
-    { name: "Dr. Anirban Neogi", role: "HOD ECE, DSCSITSC" },
-    { name: "Dr. Ruma Sen", role: "HOD ME, DSCSITSC" },
-    { name: "Dr. Dipakar Das", role: "HOD BSH, DSCSITSC" },
-    { name: "Mr. Baibaswata Das", role: "TIC CE, DSCSITSC" },
-    { name: "Mr. Arindam Mukherjee", role: "TIC, AUE, DSCSITSC" },
-    { name: "Dr. Soumitra Roy", role: "Coordinator, IQAC" },
-    { name: "Dr. Biswabandhu Chatterjee", role: "Convener R&D, DSCSITSC" },
-  ];
-
   return (
-    <div ref={sectionRef} className="min-h-screen bg-[#fafafa] pt-32 pb-24 overflow-hidden">
-      {/* Dynamic Background Elements */}
-      <div className="fixed inset-0 pointer-events-none -z-10">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#b8f29d]/10 rounded-full blur-[120px]" />
-        <div className="absolute bottom-[10%] right-[-5%] w-[30%] h-[30%] bg-[#059669]/5 rounded-full blur-[100px]" />
-      </div>
+    <>
+      {/* ── Scoped Styles ── */}
+      <style>{`
+        /* ── Page shell ── */
+        .cmt-page {
+          min-height: 100vh;
+          background: #f8fafc;
+          padding-top: 7rem;
+          padding-bottom: 6rem;
+          overflow-x: hidden;
+          font-family: 'Inter', system-ui, sans-serif;
+        }
 
-      <div className="max-w-7xl mx-auto px-6">
-        {/* Hero Section */}
-        <div className="hero-content text-center mb-24">
-          <div className="inline-flex items-center gap-3 mb-6 mix-blend-multiply">
-            <span className="w-12 h-1 bg-[#059669] rounded-full" />
-            <span className="text-xs font-black uppercase tracking-[0.4em] text-[#059669]">Leadership Team</span>
-          </div>
-          <h1 className="text-5xl md:text-8xl font-black text-gray-900 mb-8 tracking-tighter">
-            Our <span className="text-[#059669]">Committee</span>
-          </h1>
-          <p className="max-w-2xl mx-auto text-lg md:text-xl text-gray-600 font-medium leading-relaxed">
-            A distinguished panel of visionaries and experts driving the excellence of RDAMSE 2026.
-          </p>
-        </div>
+        /* ── Blob decorations ── */
+        .cmt-blob {
+          position: fixed;
+          border-radius: 50%;
+          pointer-events: none;
+          z-index: 0;
+          filter: blur(110px);
+        }
+        .cmt-blob-1 { top:-8%; left:-8%; width:38%; height:38%; background:rgba(184,242,157,.15); }
+        .cmt-blob-2 { bottom:8%; right:-4%; width:28%; height:28%; background:rgba(5,150,105,.07); }
 
-        {/* Organizing Committee Section */}
-        <div className="committee-section mb-32">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6 border-b border-gray-200 pb-8">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-black text-gray-900 mb-2 uppercase italic tracking-tight">Organizing Committee</h2>
-              <p className="text-[#059669] font-bold">The Core Leadership</p>
+        /* ── Content wrapper ── */
+        .cmt-container {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 1.25rem;
+          position: relative;
+          z-index: 1;
+        }
+
+        /* ── Hero ── */
+        .cmt-hero { text-align: center; margin-bottom: 5rem; }
+        .cmt-hero-eyebrow {
+          display: inline-flex;
+          align-items: center;
+          gap: .75rem;
+          margin-bottom: 1.25rem;
+        }
+        .cmt-hero-line { width: 3rem; height: 3px; background: #059669; border-radius: 99px; }
+        .cmt-hero-label {
+          font-size: .7rem;
+          font-weight: 900;
+          letter-spacing: .4em;
+          text-transform: uppercase;
+          color: #059669;
+        }
+        .cmt-hero-title {
+          font-size: clamp(2.4rem, 7vw, 5.5rem);
+          font-weight: 900;
+          color: #0f172a;
+          line-height: 1.05;
+          letter-spacing: -.03em;
+          margin-bottom: 1rem;
+        }
+        .cmt-hero-title span { color: #059669; }
+        .cmt-hero-desc {
+          max-width: 38rem;
+          margin: 0 auto;
+          color: #64748b;
+          font-size: 1.05rem;
+          font-weight: 500;
+          line-height: 1.7;
+        }
+
+        /* ── Section wrapper ── */
+        .cmt-section { margin-bottom: 5rem; }
+
+        /* ── Section header ── */
+        .cmt-section-header { margin-bottom: 2.5rem; }
+        .cmt-section-title {
+          font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+          font-weight: 900;
+          color: #0f172a;
+          text-transform: uppercase;
+          font-style: italic;
+          letter-spacing: -.02em;
+        }
+        .cmt-section-subtitle {
+          color: #059669;
+          font-weight: 700;
+          font-size: .95rem;
+          margin-top: .2rem;
+        }
+        .cmt-divider {
+          height: 3px;
+          width: 4rem;
+          background: linear-gradient(90deg, #059669, #b8f29d);
+          border-radius: 99px;
+          margin-top: .9rem;
+        }
+
+        /* ── Chief Patron ── */
+        .cmt-chief-card {
+          background: linear-gradient(135deg, #059669 0%, #047857 100%);
+          border-radius: 2rem;
+          padding: 2.5rem 2rem;
+          display: flex;
+          align-items: center;
+          gap: 2rem;
+          box-shadow: 0 20px 50px rgba(5,150,105,.25);
+          flex-wrap: wrap;
+        }
+        .cmt-chief-badge {
+          width: 5rem; height: 5rem; flex-shrink: 0;
+          border-radius: 50%;
+          background: rgba(255,255,255,.15);
+          display: flex; align-items: center; justify-content: center;
+          font-size: 1.8rem; font-weight: 900; color: #fff;
+          letter-spacing: -.04em;
+        }
+        .cmt-chief-label {
+          font-size: .65rem; font-weight: 900;
+          text-transform: uppercase; letter-spacing: .35em;
+          color: rgba(255,255,255,.6); margin-bottom: .4rem;
+        }
+        .cmt-chief-name {
+          font-size: clamp(1.6rem, 4vw, 2.8rem);
+          font-weight: 900; color: #fff; line-height: 1.1; margin-bottom: .3rem;
+        }
+        .cmt-chief-role { font-size: 1.05rem; color: rgba(255,255,255,.8); font-weight: 600; }
+
+        /* ── Patron grid ── */
+        .cmt-patron-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+          gap: 1rem;
+        }
+        .cmt-patron-card {
+          background: #fff;
+          border: 1.5px solid #e2e8f0;
+          border-radius: 1.2rem;
+          padding: 1.2rem 1.1rem;
+          transition: border-color .25s, box-shadow .25s, transform .25s;
+        }
+        .cmt-patron-card:hover {
+          border-color: #b8f29d;
+          box-shadow: 0 8px 24px rgba(5,150,105,.1);
+          transform: translateY(-3px);
+        }
+        .cmt-patron-tag {
+          font-size: .6rem; font-weight: 900;
+          text-transform: uppercase; letter-spacing: .3em;
+          color: #059669; margin-bottom: .5rem; opacity: .65;
+        }
+        .cmt-patron-name { font-weight: 800; color: #0f172a; font-size: .95rem; line-height: 1.3; }
+        .cmt-patron-role { font-size: .8rem; color: #64748b; font-weight: 600; margin-top: .25rem; }
+
+        /* ── Advisory grid ── */
+        .cmt-advisory-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+          gap: 1rem;
+        }
+        .cmt-advisory-card {
+          background: #fff;
+          border: 1.5px solid #e2e8f0;
+          border-radius: 1.2rem;
+          padding: 1.4rem 1.2rem;
+          transition: border-color .25s, box-shadow .25s, transform .25s;
+          display: flex;
+          flex-direction: column;
+          gap: .4rem;
+        }
+        .cmt-advisory-card:hover {
+          border-color: #b8f29d;
+          box-shadow: 0 8px 24px rgba(5,150,105,.1);
+          transform: translateY(-3px);
+        }
+        .cmt-advisory-name { font-weight: 800; color: #0f172a; font-size: 1rem; }
+        .cmt-advisory-role { font-size: .82rem; color: #64748b; font-weight: 500; line-height: 1.5; }
+
+        /* ── Sponsors ── */
+        .cmt-sponsor-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+          gap: 1.1rem;
+        }
+        .cmt-sponsor-card {
+          background: #fff;
+          border: 1.5px solid #e2e8f0;
+          border-radius: 1.4rem;
+          padding: 1.5rem 1.3rem;
+          transition: border-color .25s, box-shadow .25s, transform .25s;
+          border-top: 4px solid #059669;
+        }
+        .cmt-sponsor-card:hover {
+          border-color: #059669;
+          box-shadow: 0 8px 28px rgba(5,150,105,.12);
+          transform: translateY(-3px);
+        }
+        .cmt-sponsor-icon {
+          width: 2.4rem; height: 2.4rem;
+          border-radius: .7rem;
+          background: linear-gradient(135deg,#059669,#b8f29d);
+          display: flex; align-items: center; justify-content: center;
+          margin-bottom: .9rem;
+        }
+        .cmt-sponsor-icon svg { width: 1.1rem; height: 1.1rem; fill: #fff; }
+        .cmt-sponsor-name { font-weight: 900; color: #0f172a; font-size: 1rem; margin-bottom: .4rem; }
+        .cmt-sponsor-desc { font-size: .82rem; color: #64748b; font-weight: 500; line-height: 1.55; }
+
+        /* ── Organizing ── */
+        .cmt-org-top {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 1rem;
+          margin-bottom: 2rem;
+        }
+        @media (min-width: 640px) {
+          .cmt-org-top { grid-template-columns: repeat(3, 1fr); }
+        }
+        .cmt-org-highlight {
+          border-radius: 1.4rem;
+          padding: 1.5rem 1.3rem;
+          border: 1.5px solid #e2e8f0;
+          background: #fff;
+          transition: box-shadow .25s;
+        }
+        .cmt-org-highlight:hover { box-shadow: 0 8px 24px rgba(5,150,105,.1); }
+        .cmt-org-highlight.green {
+          background: linear-gradient(135deg,#059669 0%,#047857 100%);
+          border-color: transparent;
+        }
+        .cmt-org-tag {
+          font-size: .6rem; font-weight: 900; letter-spacing: .35em;
+          text-transform: uppercase; margin-bottom: .5rem;
+        }
+        .cmt-org-tag.dark { color: #059669; }
+        .cmt-org-tag.light { color: rgba(255,255,255,.65); }
+        .cmt-org-name { font-weight: 900; font-size: 1.05rem; line-height: 1.3; }
+        .cmt-org-name.dark { color: #0f172a; }
+        .cmt-org-name.light { color: #fff; }
+        .cmt-org-role { font-size: .82rem; margin-top: .3rem; }
+        .cmt-org-role.dark { color: #64748b; }
+        .cmt-org-role.light { color: rgba(255,255,255,.75); }
+
+        /* ── Member card (list) ── */
+        .cmt-member-card {
+          display: flex;
+          align-items: flex-start;
+          gap: .85rem;
+          background: #fff;
+          border: 1.5px solid #e2e8f0;
+          border-radius: 1rem;
+          padding: 1rem 1.1rem;
+          transition: border-color .25s, transform .2s;
+        }
+        .cmt-member-card:hover { border-color: #b8f29d; transform: translateY(-2px); }
+        .cmt-member-card--accent .cmt-member-avatar { background: #059669; color: #fff; }
+        .cmt-member-avatar {
+          width: 2.2rem; height: 2.2rem; flex-shrink: 0;
+          border-radius: 50%;
+          background: #e2e8f0;
+          display: flex; align-items: center; justify-content: center;
+          font-weight: 900; font-size: .85rem; color: #64748b;
+        }
+        .cmt-member-name { font-weight: 800; font-size: .92rem; color: #0f172a; }
+        .cmt-member-role { font-size: .78rem; color: #64748b; font-weight: 500; margin-top: .15rem; }
+
+        .cmt-member-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+          gap: .85rem;
+        }
+
+        /* ── Responsive tweaks ── */
+        @media (max-width: 480px) {
+          .cmt-chief-card { flex-direction: column; text-align: center; }
+          .cmt-chief-badge { margin: 0 auto; }
+        }
+      `}</style>
+
+      <div ref={pageRef} className="cmt-page">
+        {/* Blobs */}
+        <div className="cmt-blob cmt-blob-1" />
+        <div className="cmt-blob cmt-blob-2" />
+
+        <div className="cmt-container">
+
+          {/* ── Hero ── */}
+          <div className="cmt-hero">
+            <div className="cmt-hero-eyebrow">
+              <span className="cmt-hero-line" />
+              <span className="cmt-hero-label">Leadership &amp; Committee</span>
+              <span className="cmt-hero-line" />
             </div>
+            <h1 className="cmt-hero-title">Our <span>Committee</span></h1>
+            <p className="cmt-hero-desc">
+              A distinguished panel of visionaries, scientists, and educators driving the excellence of RDAMSE&nbsp;2026.
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Chief Patron Specialized Card */}
-            <div className="lg:col-span-3  bg-[#059669]  p-10 rounded-[2.5rem] border border-[#b8f29d]/30 shadow-2xl shadow-gray-200 relative overflow-hidden group">
-              <div className="absolute top-0 right-0 p-8">
-                <div className="w-12 h-12 rounded-full bg-[#b8f29d]/20 flex items-center justify-center text-white font-black">CP</div>
+          {/* ════ 1. CHIEF PATRON ════ */}
+          <section className="cmt-section cmt-animate">
+            <SectionHeader title="Chief Patron" subtitle="Highest Honorary Patron of RDAMSE 2026" />
+            <div className="cmt-chief-card">
+              <div className="cmt-chief-badge">TS</div>
+              <div>
+                <p className="cmt-chief-label">Chief Patron</p>
+                <h3 className="cmt-chief-name">{chiefPatron.name}</h3>
+                <p className="cmt-chief-role">{chiefPatron.role}</p>
               </div>
-              <p className="text-white font-black uppercase tracking-widest text-sm mb-4">Chief Patron</p>
-              <h3 className="text-4xl md:text-5xl font-black text-white mb-2">{organizingCommittee.chiefPatron.name}</h3>
-              <p className="text-xl text-white font-medium">{organizingCommittee.chiefPatron.role}</p>
             </div>
+          </section>
 
-            {/* Patrons Grid */}
-            <div className="lg:col-span-3">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                {organizingCommittee.patrons.map((patron, idx) => (
-                  <div key={idx} className="bg-white p-8 rounded-3xl border border-gray-100 shadow-xl shadow-gray-100/50 hover:border-[#b8f29d] transition-all group">
-                    <p className="text-xs font-black text-[#059669] uppercase mb-3 opacity-60 group-hover:opacity-100">Patron</p>
-                    <h4 className="text-lg font-black text-gray-900 mb-1 leading-tight">{patron.name}</h4>
-                    <p className="text-sm text-gray-500 font-semibold">{patron.role}</p>
+          {/* ════ 2. PATRONS ════ */}
+          <section className="cmt-section cmt-animate">
+            <SectionHeader title="Patrons" subtitle="Distinguished Patrons of RDAMSE 2026" />
+            <div className="cmt-patron-grid">
+              {patrons.map((p, i) => (
+                <div key={i} className="cmt-patron-card">
+                  <p className="cmt-patron-tag">Patron</p>
+                  <p className="cmt-patron-name">{p.name}</p>
+                  <p className="cmt-patron-role">{p.role}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* ════ 3. ADVISORY COMMITTEE ════ */}
+          <section className="cmt-section cmt-animate">
+            <SectionHeader title="Advisory Committee" subtitle="Eminent Scientific Advisory Board" />
+            <div className="cmt-advisory-grid">
+              {advisoryCommittee.map((a, i) => (
+                <div key={i} className="cmt-advisory-card">
+                  <p className="cmt-advisory-name">{a.name}</p>
+                  <p className="cmt-advisory-role">{a.role}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* ════ 4. SPONSORS ════ */}
+          <section className="cmt-section cmt-animate">
+            <SectionHeader title="Sponsors" subtitle="Our Valued Industry Partners" />
+            <div className="cmt-sponsor-grid">
+              {sponsors.map((s, i) => (
+                <div key={i} className="cmt-sponsor-card">
+                  <div className="cmt-sponsor-icon">
+                    {/* star / medal SVG */}
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
                   </div>
-                ))}
-              </div>
+                  <p className="cmt-sponsor-name">{s.name}</p>
+                  <p className="cmt-sponsor-desc">{s.desc}</p>
+                </div>
+              ))}
             </div>
+          </section>
 
-            {/* Program Chair, Convenor & Jt. Co-Convenor */}
-            <div className="lg:col-span-1">
+          {/* ════ 5. ORGANIZING COMMITTEE ════ */}
+          <section className="cmt-section cmt-animate">
+            <SectionHeader title="Organizing Committee" subtitle="The Core Team Behind RDAMSE 2026" />
+
+            {/* Top 3 highlights */}
+            <div className="cmt-org-top">
               {/* Program Chair */}
-              <h3 className="text-xl font-black text-gray-900 mb-6 flex items-center gap-3">
-                <span className="w-2 h-6 bg-[#059669] rounded-full" />
-                PROGRAM CHAIR
-              </h3>
-              <div className="space-y-4 mb-10">
-                <div className="p-6 bg-[#059669] rounded-2xl shadow-lg shadow-emerald-200/30">
-                  <p className="text-[10px] font-black text-emerald-200 uppercase tracking-widest mb-2">Program Chair</p>
-                  <h4 className="font-black text-white text-lg leading-tight">{organizingCommittee.programChair.name}</h4>
-                  <p className="text-sm text-emerald-200 mt-1">{organizingCommittee.programChair.role}</p>
-                </div>
+              <div className="cmt-org-highlight green">
+                <p className="cmt-org-tag light">Program Chair</p>
+                <p className="cmt-org-name light">{organizingCommittee.programChair.name}</p>
+                <p className="cmt-org-role light">{organizingCommittee.programChair.role}</p>
               </div>
-
               {/* Convenor */}
-              <h3 className="text-xl font-black text-gray-900 mb-6 flex items-center gap-3">
-                <span className="w-2 h-6 bg-[#b8f29d] rounded-full" />
-                CONVENOR
-              </h3>
-              <div className="space-y-4 mb-10">
-                <div className="p-6 bg-white rounded-2xl border border-gray-100 shadow-lg">
-                  <h4 className="font-black text-gray-900">{organizingCommittee.convenor.name}</h4>
-                  <p className="text-sm text-gray-500">{organizingCommittee.convenor.role}</p>
-                </div>
+              <div className="cmt-org-highlight">
+                <p className="cmt-org-tag dark">Convenor</p>
+                <p className="cmt-org-name dark">{organizingCommittee.convenor.name}</p>
+                <p className="cmt-org-role dark">{organizingCommittee.convenor.role}</p>
               </div>
-
-              {/* Jt. Co-Convenor */}
-              <h3 className="text-xl font-black text-gray-900 mb-6 flex items-center gap-3">
-                <span className="w-2 h-6 bg-black rounded-full" />
-                CO-CONVENOR
-              </h3>
-              <div className="space-y-4">
-                <div className="p-6 bg-white rounded-2xl border border-gray-100 shadow-lg">
-                  <h4 className="font-black text-gray-900">{organizingCommittee.jtCoConvenor.name}</h4>
-                  <p className="text-sm text-gray-500">{organizingCommittee.jtCoConvenor.role}</p>
-                </div>
+              {/* Co-Convenor */}
+              <div className="cmt-org-highlight">
+                <p className="cmt-org-tag dark">Co-Convenor</p>
+                <p className="cmt-org-name dark">{organizingCommittee.coConvenor.name}</p>
+                <p className="cmt-org-role dark">{organizingCommittee.coConvenor.role}</p>
               </div>
             </div>
 
-            {/* Members Section */}
-            <div className="lg:col-span-2">
-              <h3 className="text-xl font-black text-gray-900 mb-6 flex items-center gap-3">
-                <span className="w-2 h-6 bg-black rounded-full" />
-                OrGANIZING MEMBERS
-              </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {organizingCommittee.members.map((m, idx) => (
-                  <div key={idx} className="p-6 bg-white rounded-2xl border border-gray-100 shadow-lg flex flex-col justify-center">
-                    <h4 className="font-black text-gray-900">{m.name}</h4>
-                    <p className="text-sm text-gray-500">{m.role}</p>
-                  </div>
-                ))}
-              </div>
+            {/* All members */}
+            <div className="cmt-member-grid">
+              {organizingCommittee.members.map((m, i) => (
+                <MemberCard key={i} name={m.name} role={m.role} />
+              ))}
             </div>
-          </div>
-        </div>
+          </section>
 
-        {/* Advisory Committee Section */}
-        <div className="committee-section mb-32">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6 border-b border-gray-200 pb-8">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-black text-gray-900 mb-2 uppercase italic tracking-tight">Advisory Committee</h2>
-              <p className="text-[#059669] font-bold">Guidance & Scientific Oversight</p>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {advisoryCommittee.map((adv, idx) => (
-              <div key={idx} className="p-8 rounded-3xl border bg-white border-gray-100 text-gray-900 shadow-xl hover:border-[#b8f29d] transition-all duration-300">
-                <h4 className="text-xl font-black mb-2">{adv.name}</h4>
-                <p className="font-medium text-gray-500">{adv.role}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Editorial Team Section */}
-        <div className="committee-section">
-          <div className="bg-white p-12 md:p-20 rounded-[3rem] border border-dashed border-gray-300 text-center relative overflow-hidden">
-            <div className="absolute inset-0 bg-[#059669]/5 opacity-20 pointer-events-none" />
-            <div className="relative z-10">
-              <h2 className="text-4xl md:text-6xl font-black text-gray-900 mb-6 uppercase tracking-tight italic">Editorial Team</h2>
-              <div className="inline-block px-10 py-5 bg-gray-900 text-[#b8f29d] rounded-full font-black text-2xl animate-pulse">
-                COMING SOON
-              </div>
-              <p className="mt-8 text-gray-500 font-medium max-w-lg mx-auto">
-                We are currently finalizing our editorial panel consisting of leading researchers from around the globe.
-              </p>
-            </div>
-          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
 export default Committee;
-

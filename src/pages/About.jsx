@@ -144,78 +144,11 @@ const About = () => {
   const imageRef = useRef(null);
   const contentRef = useRef(null);
 
-  // Flyer section refs
-  const flyerSectionRef = useRef(null);
-  const flyerWrapperRef = useRef(null);
-  const flyerImageRef = useRef(null);
-  const flyerLabelRef = useRef(null);
-  const flyerBadgeRef = useRef(null);
-
   // Previous Years horizontal-scroll refs
   const panelsSectionRef = useRef(null);     // <section id="panels">
   const panelsContainerRef = useRef(null);   // the wide flex container
 
   useEffect(() => {
-    // ── FLYER: Scroll-scrubbed reveal ──────────────────────────────────────
-    // Initial hidden states
-    gsap.set(flyerImageRef.current, {
-      clipPath: "inset(0% 0% 100% 0%)", // fully clipped (hidden)
-    });
-    gsap.set(flyerWrapperRef.current, { opacity: 0, y: -80 });
-    gsap.set(flyerLabelRef.current, { opacity: 0, y: 30 });
-    gsap.set(flyerBadgeRef.current, { opacity: 0, y: 20 });
-
-    // 1. Wrapper slides down from top — scrubbed over early scroll range
-    gsap.to(flyerWrapperRef.current, {
-      opacity: 1,
-      y: 0,
-      ease: "none",
-      scrollTrigger: {
-        trigger: flyerSectionRef.current,
-        start: "top 90%",   // starts as soon as section enters
-        end: "top 40%",     // fully in by the time top hits 40% viewport
-        scrub: 1.5,
-      },
-    });
-
-    // 2. Image unrolls top → bottom tied directly to scroll
-    gsap.to(flyerImageRef.current, {
-      clipPath: "inset(0% 0% 0% 0%)",  // fully revealed
-      ease: "none",
-      scrollTrigger: {
-        trigger: flyerSectionRef.current,
-        start: "top 70%",    // begin unrolling when section just enters
-        end: "center 30%",   // fully open when section center hits 30% viewport
-        scrub: 1.5,          // smooth scrub lag — image follows scroll 1:1
-      },
-    });
-
-    // 3. Label fades in later in the scroll
-    gsap.to(flyerLabelRef.current, {
-      opacity: 1,
-      y: 0,
-      ease: "none",
-      scrollTrigger: {
-        trigger: flyerSectionRef.current,
-        start: "top 60%",
-        end: "top 20%",
-        scrub: 1.2,
-      },
-    });
-
-    // 4. Badge pops in at the very end of the scrub range
-    gsap.to(flyerBadgeRef.current, {
-      opacity: 1,
-      y: 0,
-      ease: "none",
-      scrollTrigger: {
-        trigger: flyerSectionRef.current,
-        start: "top 50%",
-        end: "top 10%",
-        scrub: 1,
-      },
-    });
-
     // ── About the Institute: regular play-on-scroll ────────────────────────
     gsap.set([imageRef.current, contentRef.current], { opacity: 0, y: 40 });
 
@@ -311,53 +244,38 @@ const About = () => {
       )}
 
       {/* ===================== FLYER SHOWCASE SECTION ===================== */}
-      <section
-        ref={flyerSectionRef}
-        className="relative py-20 px-4 sm:px-6 md:px-20 lg:px-28 xl:px-32 bg-white"
-      >
+      <section className="relative py-16 px-4 sm:px-6 bg-white overflow-hidden">
         {/* Decorative ambient glows */}
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#b8f29d]/20 rounded-full blur-[100px] pointer-events-none" />
-        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-[#059669]/10 rounded-full blur-[80px] pointer-events-none" />
+        <div className="absolute top-0 left-1/4 w-72 h-72 bg-[#b8f29d]/20 rounded-full blur-[90px] pointer-events-none" />
+        <div className="absolute bottom-0 right-1/4 w-60 h-60 bg-[#059669]/10 rounded-full blur-[70px] pointer-events-none" />
 
         <div className="max-w-5xl mx-auto">
           {/* Section label */}
-          <div ref={flyerLabelRef} className="text-center mb-10">
+          <div className="text-center mb-8">
             <div className="inline-flex items-center gap-3 mb-4">
               <span className="w-10 h-1 bg-[#059669] rounded-full" />
-              <span className="text-xs font-black uppercase tracking-[0.35em] text-[#059669]">
-                Official Flyer
-              </span>
+              <span className="text-xs font-black uppercase tracking-[0.35em] text-[#059669]">Official Flyer</span>
               <span className="w-10 h-1 bg-[#059669] rounded-full" />
             </div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-gray-900 leading-tight">
               2nd IC-RDAMSE{" "}
-              <span className="bg-gradient-to-r from-[#059669] to-[#b8f29d] bg-clip-text text-transparent">
-                2026
-              </span>
+              <span className="bg-gradient-to-r from-[#059669] to-[#b8f29d] bg-clip-text text-transparent">2026</span>
             </h2>
-            <p className="mt-3 text-gray-500 text-lg font-medium">
-              7th – 8th May 2026 · SurTech, Kolkata
-            </p>
+            <p className="mt-3 text-gray-500 text-base font-medium">7th – 8th May 2026 · SurTech, Kolkata</p>
           </div>
 
-          {/* ── Flyer Slider ─────────────────────────────────── */}
-          <div
-            ref={flyerWrapperRef}
-            className="relative mx-auto w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-xl xl:max-w-2xl"
-          >
-            {/* Ambient glow behind card */}
-            <div className="absolute -inset-4 sm:-inset-6 bg-gradient-to-br from-[#b8f29d]/40 via-[#059669]/20 to-transparent rounded-[3rem] blur-2xl pointer-events-none" />
+          {/* ── Flyer Slider ── */}
+          <div className="relative w-full px-0 md:px-16 lg:px-20">
+            {/* Ambient glow */}
+            <div className="absolute -inset-3 bg-gradient-to-br from-[#b8f29d]/40 via-[#059669]/20 to-transparent rounded-[2.5rem] blur-2xl pointer-events-none" />
 
-            {/* ── CARD ── */}
-            <div className="relative p-[3px] sm:p-1 rounded-[1.5rem] sm:rounded-[2rem]
-                            bg-gradient-to-br from-[#b8f29d] via-[#059669] to-[#047857]
-                            shadow-2xl shadow-[#059669]/25">
-              <div className="relative rounded-[1.3rem] sm:rounded-[1.7rem] overflow-hidden bg-white">
+            {/* Gradient border card */}
+            <div className="relative p-[3px] rounded-2xl bg-gradient-to-br from-[#b8f29d] via-[#059669] to-[#047857] shadow-2xl shadow-[#059669]/20">
+              <div className="relative rounded-[1.1rem] overflow-hidden bg-white">
 
-                {/* Animating image wrapper */}
+                {/* Image */}
                 <div ref={flyerSlideRef} className="w-full">
                   <img
-                    ref={flyerImageRef}
                     src={flyerSlides[flyerIndex].src}
                     alt={flyerSlides[flyerIndex].alt}
                     className="w-full h-auto object-contain block"
@@ -365,42 +283,30 @@ const About = () => {
                   />
                 </div>
 
-                {/* ── MOBILE arrows  (overlay inside card) ── */}
-                {/* Left */}
+                {/* Mobile-only overlay arrows (inside card) */}
                 <button
                   onClick={prevFlyer}
                   aria-label="Previous flyer"
-                  className="
-                    md:hidden
-                    absolute left-2 top-1/2 -translate-y-1/2 z-20
-                    w-9 h-9 flex items-center justify-center
-                    rounded-full
-                    bg-[#059669] text-white
-                    shadow-lg shadow-[#059669]/50
-                    border-2 border-white/30
-                    hover:scale-110 active:scale-95
-                    transition-transform duration-200
-                  "
+                  className="md:hidden absolute left-2 top-1/2 -translate-y-1/2 z-20
+                    w-9 h-9 flex items-center justify-center rounded-full
+                    bg-[#059669]/90 backdrop-blur-sm text-white
+                    shadow-lg shadow-[#059669]/50 border-2 border-white/40
+                    hover:bg-[#059669] hover:scale-110 active:scale-95
+                    transition-all duration-200"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.8}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
                   </svg>
                 </button>
-                {/* Right */}
                 <button
                   onClick={nextFlyer}
                   aria-label="Next flyer"
-                  className="
-                    md:hidden
-                    absolute right-2 top-1/2 -translate-y-1/2 z-20
-                    w-9 h-9 flex items-center justify-center
-                    rounded-full
-                    bg-[#059669] text-white
-                    shadow-lg shadow-[#059669]/50
-                    border-2 border-white/30
-                    hover:scale-110 active:scale-95
-                    transition-transform duration-200
-                  "
+                  className="md:hidden absolute right-2 top-1/2 -translate-y-1/2 z-20
+                    w-9 h-9 flex items-center justify-center rounded-full
+                    bg-[#059669]/90 backdrop-blur-sm text-white
+                    shadow-lg shadow-[#059669]/50 border-2 border-white/40
+                    hover:bg-[#059669] hover:scale-110 active:scale-95
+                    transition-all duration-200"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.8}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
@@ -409,83 +315,62 @@ const About = () => {
               </div>
             </div>
 
-            {/* ── DESKTOP arrows (outside the card, large & glowing) ── */}
-            {/* Left */}
+            {/* ── Desktop PREV — floats left of the poster ── */}
             <button
               onClick={prevFlyer}
               aria-label="Previous flyer"
-              className="
-                hidden md:flex
-                absolute left-0 top-1/2
-                -translate-y-1/2 -translate-x-[calc(100%+20px)]
-                z-20
-                w-14 h-14 items-center justify-center
-                rounded-full
-                bg-gradient-to-br from-[#059669] to-[#047857]
-                text-white
-                shadow-xl shadow-[#059669]/60
-                ring-4 ring-[#b8f29d]/40
-                hover:ring-[#059669]/70 hover:scale-110 hover:shadow-2xl
-                active:scale-95
-                transition-all duration-300
-                group
-              "
+              className="group hidden md:flex flex-col items-center justify-center gap-1
+                absolute left-0 top-1/2 -translate-y-1/2 z-20
+                w-14 h-14 rounded-2xl
+                bg-white border-2 border-[#059669]/25 text-[#059669]
+                shadow-lg shadow-[#059669]/10
+                hover:bg-[#059669] hover:text-white hover:border-[#059669]
+                hover:shadow-xl hover:shadow-[#059669]/30 hover:scale-105
+                active:scale-95 transition-all duration-200 cursor-pointer"
             >
-              {/* Pulsing halo */}
-              <span className="absolute inset-0 rounded-full bg-[#059669]/30 animate-ping" />
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 relative z-10 transform group-hover:-translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.8}>
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.8}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
               </svg>
+              <span className="text-[8px] font-black uppercase tracking-widest leading-none">Prev</span>
             </button>
 
-            {/* Right */}
+            {/* ── Desktop NEXT — floats right of the poster ── */}
             <button
               onClick={nextFlyer}
               aria-label="Next flyer"
-              className="
-                hidden md:flex
-                absolute right-0 top-1/2
-                -translate-y-1/2 translate-x-[calc(100%+20px)]
-                z-20
-                w-14 h-14 items-center justify-center
-                rounded-full
-                bg-gradient-to-br from-[#059669] to-[#047857]
-                text-white
-                shadow-xl shadow-[#059669]/60
-                ring-4 ring-[#b8f29d]/40
-                hover:ring-[#059669]/70 hover:scale-110 hover:shadow-2xl
-                active:scale-95
-                transition-all duration-300
-                group
-              "
+              className="group hidden md:flex flex-col items-center justify-center gap-1
+                absolute right-0 top-1/2 -translate-y-1/2 z-20
+                w-14 h-14 rounded-2xl
+                bg-white border-2 border-[#059669]/25 text-[#059669]
+                shadow-lg shadow-[#059669]/10
+                hover:bg-[#059669] hover:text-white hover:border-[#059669]
+                hover:shadow-xl hover:shadow-[#059669]/30 hover:scale-105
+                active:scale-95 transition-all duration-200 cursor-pointer"
             >
-              <span className="absolute inset-0 rounded-full bg-[#059669]/30 animate-ping" />
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 relative z-10 transform group-hover:translate-x-0.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.8}>
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.8}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
               </svg>
+              <span className="text-[8px] font-black uppercase tracking-widest leading-none">Next</span>
             </button>
 
-            {/* ── Dot indicators ── */}
-            <div className="mt-6 flex items-center justify-center gap-2">
+            {/* Dots — shared */}
+            <div className="mt-5 flex items-center justify-center gap-2">
               {flyerSlides.map((_, i) => (
                 <button
                   key={i}
                   onClick={() => goToFlyer(i)}
                   aria-label={`Go to flyer ${i + 1}`}
-                  className={`rounded-full transition-all duration-300 ${i === flyerIndex
+                  className={`rounded-full transition-all duration-300 cursor-pointer ${
+                    i === flyerIndex
                       ? 'w-7 h-3 bg-[#059669] shadow-md shadow-[#059669]/40'
                       : 'w-3 h-3 bg-gray-300 hover:bg-[#b8f29d]'
-                    }`}
+                  }`}
                 />
               ))}
             </div>
 
-            {/* ── Floating slide-counter badge ── */}
-            <div
-              ref={flyerBadgeRef}
-              className="mt-4 mx-auto w-max flex items-center gap-2 px-5 py-2 rounded-full
-                         bg-gray-900 text-white shadow-xl shadow-black/20 whitespace-nowrap"
-            >
+            {/* Slide counter badge */}
+            <div className="mt-4 mx-auto w-max flex items-center gap-2 px-5 py-2 rounded-full bg-gray-900 text-white shadow-xl shadow-black/20 whitespace-nowrap">
               <span className="w-2 h-2 rounded-full bg-[#b8f29d] animate-pulse" />
               <span className="text-[11px] font-black uppercase tracking-widest">
                 {flyerIndex + 1}&nbsp;/&nbsp;{flyerSlides.length}&nbsp;&nbsp;·&nbsp;&nbsp;2nd International Conference
@@ -493,8 +378,7 @@ const About = () => {
             </div>
           </div>
 
-          {/* Bottom spacing */}
-          <div className="h-10 sm:h-16" />
+          <div className="h-8 sm:h-12" />
         </div>
       </section>
 

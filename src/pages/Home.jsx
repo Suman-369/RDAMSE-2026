@@ -224,7 +224,7 @@ const Home = () => {
                 <div className="w-24 h-1 bg-gradient-to-r from-transparent via-[#4ade80]/50 to-transparent rounded-full" />
               </div>
               
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                 {[
                   { name: "Society for Materials Chemistry", sub: "Kolkata Chapter", logo: smcLogo },
                   { name: "Indian Photobiology Society", sub: "JU, Kolkata", logo: ipsLogo },
