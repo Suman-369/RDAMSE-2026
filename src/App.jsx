@@ -9,6 +9,7 @@ import Submission from "./pages/Submission";
 import Ragistration from "./pages/Ragistration";
 import Commite from "./pages/Commite";
 import Vanue from "./pages/Vanue";
+import ConferanseProceeding from "./pages/ConferanseProceeding";
 import Footer from "./pages/Footer";
 import ScrollToTop from "./components/ScrollToTop";
 
@@ -22,10 +23,12 @@ const App = () => {
         <Route path="/about" element={<About />} />
         <Route path="/speakers" element={<Speacker />} />
         <Route path="/call-for-papers" element={<Callforpaper />} />
+        <Route path="/conference-proceeding" element={<ConferanseProceeding />} />
         <Route path="/submission" element={<Submission />} />
         <Route path="/registration" element={<Ragistration />} />
         <Route path="/committee" element={<Commite />} />
         <Route path="/venue" element={<Vanue />} />
+        
       </Routes>
       <Footer />
     </div>
